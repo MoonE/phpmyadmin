@@ -8653,10 +8653,6 @@
       <code>$this-&gt;userSpecifiedSettings === null</code>
     </DocblockTypeContradiction>
     <MixedArgument>
-      <code>$label</code>
-      <code>$label</code>
-      <code>$label</code>
-      <code>$label</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
@@ -8683,7 +8679,6 @@
     </MixedArrayAccess>
     <MixedArrayOffset>
       <code>$row[$this-&gt;settings['labelColumn']]</code>
-      <code>$row[$this-&gt;settings['labelColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
@@ -8693,7 +8688,6 @@
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
     </MixedArrayOffset>
     <MixedAssignment>
-      <code>$label</code>
       <code>$pdf</code>
       <code>$plot_height</code>
       <code>$plot_width</code>
