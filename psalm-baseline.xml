@@ -2669,34 +2669,14 @@
   </file>
   <file src="libraries/classes/Controllers/GisDataEditorController.php">
     <InvalidArrayOffset>
-      <code>$GLOBALS['geom_count']</code>
-      <code>$GLOBALS['geom_type']</code>
-      <code>$GLOBALS['gis_data']</code>
-      <code>$GLOBALS['gis_obj']</code>
-      <code>$GLOBALS['gis_types']</code>
-      <code>$GLOBALS['open_layers']</code>
       <code>$GLOBALS['result']</code>
-      <code>$GLOBALS['start']</code>
-      <code>$GLOBALS['visualization']</code>
-      <code>$GLOBALS['visualizationSettings']</code>
-      <code>$GLOBALS['wkt']</code>
     </InvalidArrayOffset>
     <MixedArgument>
-      <code>$GLOBALS['geom_type']</code>
+      <code>$geomType</code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$GLOBALS['geom_count']</code>
-      <code>$GLOBALS['geom_type']</code>
-      <code>$GLOBALS['geom_type']</code>
-      <code>$GLOBALS['gis_data']</code>
-      <code>$GLOBALS['gis_obj']</code>
-      <code>$GLOBALS['gis_types']</code>
-      <code>$GLOBALS['open_layers']</code>
       <code>$GLOBALS['result']</code>
-      <code>$GLOBALS['start']</code>
-      <code>$GLOBALS['visualization']</code>
-      <code>$GLOBALS['visualizationSettings']</code>
-      <code>$GLOBALS['wkt']</code>
+      <code>$geomType</code>
     </MixedAssignment>
   </file>
   <file src="libraries/classes/Controllers/GitInfoController.php">
