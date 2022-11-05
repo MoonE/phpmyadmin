@@ -9176,6 +9176,26 @@ parameters:
 			path: libraries/classes/ZipExtension.php
 
 		-
+			message: "#^Call to an undefined method PhpMyAdmin\\\\Image\\\\ImageWrapper\\:\\:filledPolygonBuffered\\(\\)\\.$#"
+			count: 1
+			path: test.php
+
+		-
+			message: "#^Cannot access offset 'scale' on mixed\\.$#"
+			count: 2
+			path: test.php
+
+		-
+			message: "#^Cannot access offset 'x' on mixed\\.$#"
+			count: 1
+			path: test.php
+
+		-
+			message: "#^Cannot access offset 'y' on mixed\\.$#"
+			count: 1
+			path: test.php
+
+		-
 			message: "#^Call to function method_exists\\(\\) with 'PHPUnit\\\\\\\\Framework\\\\\\\\TestCase' and 'assertFileDoesNotEx…' will always evaluate to true\\.$#"
 			count: 1
 			path: test/classes/AbstractTestCase.php
