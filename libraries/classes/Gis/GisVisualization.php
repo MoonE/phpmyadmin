@@ -614,21 +614,19 @@ class GisVisualization
         $colors = $this->settings['colors'];
         $color_index = 0;
 
-        // loop through the rows
         foreach ($data as $row) {
             // Figure out the data type
-            $ref_data = $row[$this->settings['spatialColumn']];
-            if (! is_string($ref_data)) {
+            $wkt = $row[$this->settings['spatialColumn']];
+            if (! is_string($wkt)) {
                 continue;
             }
 
-            $type_pos = mb_strpos($ref_data, '(');
+            $type_pos = mb_strpos($wkt, '(');
             if ($type_pos === false) {
                 continue;
             }
 
-            $type = mb_substr($ref_data, 0, $type_pos);
-
+            $type = mb_substr($wkt, 0, $type_pos);
             $gis_obj = GisFactory::factory($type);
             if (! $gis_obj) {
                 continue;
@@ -639,14 +637,14 @@ class GisVisualization
 
             if ($format === 'svg') {
                 $results .= $gis_obj->prepareRowAsSvg(
-                    $row[$this->settings['spatialColumn']],
+                    $wkt,
                     $label,
                     $color,
                     $scale_data
                 );
             } elseif ($format === 'png') {
                 $results = $gis_obj->prepareRowAsPng(
-                    $row[$this->settings['spatialColumn']],
+                    $wkt,
                     $label,
                     $color,
                     $scale_data,
@@ -654,7 +652,7 @@ class GisVisualization
                 );
             } elseif ($format === 'pdf' && $results instanceof TCPDF) {
                 $results = $gis_obj->prepareRowAsPdf(
-                    $row[$this->settings['spatialColumn']],
+                    $wkt,
                     $label,
                     $color,
                     $scale_data,
@@ -662,7 +660,7 @@ class GisVisualization
                 );
             } elseif ($format === 'ol') {
                 $results .= $gis_obj->prepareRowAsOl(
-                    $row[$this->settings['spatialColumn']],
+                    $wkt,
                     (int) $row['srid'],
                     $label,
                     $color,

@@ -8629,19 +8629,11 @@
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row['srid']</code>
       <code>$row['srid']</code>
     </MixedArrayAccess>
     <MixedArrayOffset>
       <code>$row[$this-&gt;settings['labelColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
