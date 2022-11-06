@@ -4141,6 +4141,11 @@ parameters:
 			path: libraries/classes/Gis/GisGeometryCollection.php
 
 		-
+			message: "#^Cannot access offset 'LINESTRING' on array\\{\\}\\|array\\{gis_type\\: 'LINESTRING'\\}\\|int\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisLineString.php
+
+		-
 			message: "#^Method PhpMyAdmin\\\\Gis\\\\GisLineString\\:\\:generateParams\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisLineString.php
@@ -4184,6 +4189,11 @@ parameters:
 			message: "#^Parameter \\#5 \\$color of method PhpMyAdmin\\\\Image\\\\ImageWrapper\\:\\:string\\(\\) expects int, int\\|false given\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisLineString.php
+
+		-
+			message: "#^Cannot access offset 'MULTILINESTRING' on array\\{\\}\\|array\\{gis_type\\: 'MULTILINESTRING'\\}\\|int\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisMultiLineString.php
 
 		-
 			message: "#^Cannot access offset int\\<0, max\\> on non\\-empty\\-array\\<'no_of_points'\\|int\\<0, max\\>, array\\{x\\: mixed, y\\: mixed\\}\\|int\\<0, max\\>\\>\\|int\\<1, max\\>\\.$#"
@@ -4241,6 +4251,11 @@ parameters:
 			path: libraries/classes/Gis/GisMultiLineString.php
 
 		-
+			message: "#^Cannot access offset 'MULTIPOINT' on array\\{\\}\\|array\\{gis_type\\: 'MULTIPOINT'\\}\\|int\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisMultiPoint.php
+
+		-
 			message: "#^Method PhpMyAdmin\\\\Gis\\\\GisMultiPoint\\:\\:generateParams\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisMultiPoint.php
@@ -4294,6 +4309,11 @@ parameters:
 			message: "#^Parameter \\#7 \\$color of method PhpMyAdmin\\\\Image\\\\ImageWrapper\\:\\:arc\\(\\) expects int, int\\|false given\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisMultiPoint.php
+
+		-
+			message: "#^Cannot access offset 'MULTIPOLYGON' on array\\{\\}\\|array\\{gis_type\\: 'MULTIPOLYGON'\\}\\|int\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisMultiPolygon.php
 
 		-
 			message: "#^Cannot access offset int\\<0, max\\> on non\\-empty\\-array\\<'no_of_lines'\\|int\\<0, max\\>, array\\{no_of_points\\: int\\<0, max\\>, 0\\?\\: array\\{x\\: mixed, y\\: mixed\\}\\}\\|int\\<1, max\\>\\>\\|int\\<1, max\\>\\.$#"
@@ -4361,6 +4381,11 @@ parameters:
 			path: libraries/classes/Gis/GisMultiPolygon.php
 
 		-
+			message: "#^Cannot access offset 'POINT' on array\\{\\}\\|array\\{gis_type\\: 'POINT'\\}\\|int\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisPoint.php
+
+		-
 			message: "#^Method PhpMyAdmin\\\\Gis\\\\GisPoint\\:\\:generateParams\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisPoint.php
@@ -4409,6 +4434,11 @@ parameters:
 			message: "#^Parameter \\#7 \\$color of method PhpMyAdmin\\\\Image\\\\ImageWrapper\\:\\:arc\\(\\) expects int, int\\|false given\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisPoint.php
+
+		-
+			message: "#^Cannot access offset 'POLYGON' on array\\{\\}\\|array\\{gis_type\\: 'POLYGON'\\}\\|int\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisPolygon.php
 
 		-
 			message: "#^Cannot access offset int\\<0, max\\> on non\\-empty\\-array\\<'no_of_points'\\|int\\<0, max\\>, array\\{x\\: mixed, y\\: mixed\\}\\|int\\<0, max\\>\\>\\|int\\<1, max\\>\\.$#"
@@ -10201,17 +10231,17 @@ parameters:
 			path: test/classes/Gis/GisGeometryTest.php
 
 		-
-			message: "#^Method PhpMyAdmin\\\\Tests\\\\Gis\\\\GisGeometryTest\\:\\:providerForTestGenerateParams\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: test/classes/Gis/GisGeometryTest.php
-
-		-
 			message: "#^Method PhpMyAdmin\\\\Tests\\\\Gis\\\\GisGeometryTest\\:\\:providerForTestGetBoundsForOl\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: test/classes/Gis/GisGeometryTest.php
 
 		-
 			message: "#^Method PhpMyAdmin\\\\Tests\\\\Gis\\\\GisGeometryTest\\:\\:providerForTestGetPolygonArrayForOpenLayers\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: test/classes/Gis/GisGeometryTest.php
+
+		-
+			message: "#^Method PhpMyAdmin\\\\Tests\\\\Gis\\\\GisGeometryTest\\:\\:providerForTestParseWktAndSrid\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: test/classes/Gis/GisGeometryTest.php
 
@@ -10231,17 +10261,17 @@ parameters:
 			path: test/classes/Gis/GisGeometryTest.php
 
 		-
-			message: "#^Method PhpMyAdmin\\\\Tests\\\\Gis\\\\GisGeometryTest\\:\\:testGenerateParams\\(\\) has parameter \\$output with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: test/classes/Gis/GisGeometryTest.php
-
-		-
 			message: "#^Method PhpMyAdmin\\\\Tests\\\\Gis\\\\GisGeometryTest\\:\\:testGetBoundsForOl\\(\\) has parameter \\$scale_data with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: test/classes/Gis/GisGeometryTest.php
 
 		-
 			message: "#^Method PhpMyAdmin\\\\Tests\\\\Gis\\\\GisGeometryTest\\:\\:testGetPolygonArrayForOpenLayers\\(\\) has parameter \\$polygons with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: test/classes/Gis/GisGeometryTest.php
+
+		-
+			message: "#^Method PhpMyAdmin\\\\Tests\\\\Gis\\\\GisGeometryTest\\:\\:testParseWktAndSrid\\(\\) has parameter \\$output with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: test/classes/Gis/GisGeometryTest.php
 

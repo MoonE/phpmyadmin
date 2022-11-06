@@ -479,7 +479,7 @@ final class GisPolygon extends GisGeometry
     {
         if ($index == -1) {
             $index = 0;
-            $data = GisGeometry::generateParams($value);
+            $data = GisGeometry::parseWktAndSrid($value);
             $params = [
                 'srid' => $data['srid'],
                 $index => [],

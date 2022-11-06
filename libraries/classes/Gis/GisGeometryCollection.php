@@ -319,12 +319,13 @@ final class GisGeometryCollection extends GisGeometry
      * Generates parameters for the GIS data editor from the value of the GIS column.
      *
      * @param string $value of the GIS column
+     * @param int    $index Not used for GEOMETRYCOLLECTION
      *
      * @return array parameters for the GIS editor from the value of the GIS column
      */
-    public function generateParams(string $value): array
+    public function generateParams(string $value, int $index = -1): array
     {
-        $data = GisGeometry::generateParams($value);
+        $data = GisGeometry::parseWktAndSrid($value);
         $wkt = $data['wkt'];
 
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'

@@ -98,32 +98,32 @@ class GisGeometryTest extends AbstractTestCase
     }
 
     /**
-     * tests generateParams method
+     * tests parseWktAndSrid method
      *
      * @param string $value  Geometry data
      * @param array  $output Expected output
      *
-     * @dataProvider providerForTestGenerateParams
+     * @dataProvider providerForTestParseWktAndSrid
      */
-    public function testGenerateParams(string $value, array $output): void
+    public function testParseWktAndSrid(string $value, array $output): void
     {
         $this->assertEquals(
             $output,
             $this->callFunction(
                 $this->object,
                 GisGeometry::class,
-                'generateParams',
+                'parseWktAndSrid',
                 [$value]
             )
         );
     }
 
     /**
-     * data provider for testGenerateParams
+     * data provider for testParseWktAndSrid
      *
-     * @return array data for testGenerateParams
+     * @return array data for testParseWktAndSrid
      */
-    public function providerForTestGenerateParams(): array
+    public function providerForTestParseWktAndSrid(): array
     {
         return [
             [

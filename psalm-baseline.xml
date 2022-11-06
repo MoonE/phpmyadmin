@@ -7957,12 +7957,10 @@
   <file src="libraries/classes/Gis/GisGeometryCollection.php">
     <MixedArgument>
       <code>$type</code>
-      <code>$wkt</code>
     </MixedArgument>
     <MixedAssignment>
       <code>$geom_count</code>
       <code>$type</code>
-      <code>$wkt</code>
     </MixedAssignment>
   </file>
   <file src="libraries/classes/Gis/GisLineString.php">
@@ -7979,7 +7977,6 @@
       <code>$temp_point[0]</code>
       <code>$temp_point[1]</code>
       <code>$temp_point[1]</code>
-      <code>$wkt</code>
     </MixedArgument>
     <MixedArrayAccess>
       <code>$gis_data[$index]['LINESTRING']['no_of_points']</code>
@@ -8000,9 +7997,6 @@
       <code>$temp_point[1]</code>
       <code>$temp_point[1]</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment>
-      <code>$params[$index]['LINESTRING']</code>
-    </MixedArrayAssignment>
     <MixedAssignment>
       <code>$no_of_points</code>
       <code>$point</code>
@@ -8010,7 +8004,6 @@
       <code>$point</code>
       <code>$temp_point</code>
       <code>$temp_point</code>
-      <code>$wkt</code>
     </MixedAssignment>
     <MixedOperand>
       <code>$point[0]</code>
@@ -8026,6 +8019,9 @@
       <code>$black</code>
       <code>$line_color</code>
     </PossiblyFalseArgument>
+    <PossiblyInvalidArrayAssignment>
+      <code>$params[$index]['LINESTRING']</code>
+    </PossiblyInvalidArrayAssignment>
   </file>
   <file src="libraries/classes/Gis/GisMultiLineString.php">
     <MixedArgument>
@@ -8041,7 +8037,6 @@
       <code>$temp_point[0]</code>
       <code>$temp_point[1]</code>
       <code>$temp_point[1]</code>
-      <code>$wkt</code>
     </MixedArgument>
     <MixedArrayAccess>
       <code>$data_row[$i]</code>
@@ -8069,9 +8064,6 @@
       <code>$temp_point[1]</code>
       <code>$temp_point[1]</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment>
-      <code>$params[$index]['MULTILINESTRING']</code>
-    </MixedArrayAssignment>
     <MixedAssignment>
       <code>$data_row</code>
       <code>$no_of_lines</code>
@@ -8082,7 +8074,6 @@
       <code>$point</code>
       <code>$temp_point</code>
       <code>$temp_point</code>
-      <code>$wkt</code>
     </MixedAssignment>
     <MixedOperand>
       <code>$point['x']</code>
@@ -8100,6 +8091,9 @@
       <code>$black</code>
       <code>$line_color</code>
     </PossiblyFalseArgument>
+    <PossiblyInvalidArrayAssignment>
+      <code>$params[$index]['MULTILINESTRING']</code>
+    </PossiblyInvalidArrayAssignment>
   </file>
   <file src="libraries/classes/Gis/GisMultiPoint.php">
     <MixedArgument>
@@ -8112,7 +8106,6 @@
       <code>$points_arr[0][0]</code>
       <code>$points_arr[0][1]</code>
       <code>$points_arr[0][1]</code>
-      <code>$wkt</code>
     </MixedArgument>
     <MixedArrayAccess>
       <code>$gis_data[$index]['MULTIPOINT']['no_of_points']</code>
@@ -8141,16 +8134,12 @@
       <code>$row_data['points'][$i]['x']</code>
       <code>$row_data['points'][$i]['y']</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment>
-      <code>$params[$index]['MULTIPOINT']</code>
-    </MixedArrayAssignment>
     <MixedAssignment>
       <code>$no_of_points</code>
       <code>$point</code>
       <code>$point</code>
       <code>$point</code>
       <code>$point</code>
-      <code>$wkt</code>
     </MixedAssignment>
     <MixedOperand>
       <code>$point[0]</code>
@@ -8168,6 +8157,9 @@
       <code>$black</code>
       <code>$point_color</code>
     </PossiblyFalseArgument>
+    <PossiblyInvalidArrayAssignment>
+      <code>$params[$index]['MULTIPOINT']</code>
+    </PossiblyInvalidArrayAssignment>
   </file>
   <file src="libraries/classes/Gis/GisMultiPolygon.php">
     <ArgumentTypeCoercion>
@@ -8182,7 +8174,6 @@
       <code>$ring2['points']</code>
       <code>$ring['points']</code>
       <code>$ring['points']</code>
-      <code>$wkt</code>
     </MixedArgument>
     <MixedArrayAccess>
       <code>$data_row[$k]</code>
@@ -8220,7 +8211,6 @@
       <code>$row_data['parts'][$j]['points']</code>
     </MixedArrayAccess>
     <MixedArrayAssignment>
-      <code>$params[$index]['MULTIPOLYGON']</code>
       <code>$row_data['parts'][$i]</code>
       <code>$row_data['parts'][$i]</code>
       <code>$row_data['parts'][$i]['isOuter']</code>
@@ -8256,7 +8246,6 @@
       <code>$ring1</code>
       <code>$ring2</code>
       <code>$row_data['parts'][$k]['inner'][]</code>
-      <code>$wkt</code>
     </MixedAssignment>
     <MixedOperand>
       <code>$innerPoint['x']</code>
@@ -8278,6 +8267,9 @@
       <code>$black</code>
       <code>$fill_color</code>
     </PossiblyFalseArgument>
+    <PossiblyInvalidArrayAssignment>
+      <code>$params[$index]['MULTIPOLYGON']</code>
+    </PossiblyInvalidArrayAssignment>
   </file>
   <file src="libraries/classes/Gis/GisPoint.php">
     <MixedArgument>
@@ -8290,7 +8282,6 @@
       <code>$points_arr[0][1]</code>
       <code>$points_arr[0][1]</code>
       <code>$points_arr[0][1]</code>
-      <code>$wkt</code>
     </MixedArgument>
     <MixedArrayAccess>
       <code>$gis_data[$index]['POINT']['x']</code>
@@ -8310,12 +8301,6 @@
       <code>$points_arr[0][1]</code>
       <code>$points_arr[0][1]</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment>
-      <code>$params[$index]['POINT']</code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code>$wkt</code>
-    </MixedAssignment>
     <MixedOperand>
       <code>$points_arr[0][0]</code>
       <code>$points_arr[0][1]</code>
@@ -8332,6 +8317,9 @@
       <code>$black</code>
       <code>$point_color</code>
     </PossiblyFalseArgument>
+    <PossiblyInvalidArrayAssignment>
+      <code>$params[$index]['POINT']</code>
+    </PossiblyInvalidArrayAssignment>
   </file>
   <file src="libraries/classes/Gis/GisPolygon.php">
     <ArgumentTypeCoercion>
@@ -8342,7 +8330,6 @@
       <code>$points_arr[2]</code>
       <code>$points_arr[3]</code>
       <code>$points_arr[3]</code>
-      <code>$wkt</code>
       <code>($y1 - $y0) ** 2 + ($x0 - $x1) ** 2</code>
     </MixedArgument>
     <MixedArrayAccess>
@@ -8391,9 +8378,6 @@
       <code>$ring[0]['x']</code>
       <code>$ring[0]['y']</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment>
-      <code>$params[$index]['POLYGON']</code>
-    </MixedArrayAssignment>
     <MixedAssignment>
       <code>$area</code>
       <code>$area</code>
@@ -8411,7 +8395,6 @@
       <code>$pointA['y']</code>
       <code>$pointB['x']</code>
       <code>$pointB['y']</code>
-      <code>$wkt</code>
       <code>$x0</code>
       <code>$x1</code>
       <code>$x2</code>
@@ -8475,6 +8458,9 @@
       <code>$black</code>
       <code>$fill_color</code>
     </PossiblyFalseArgument>
+    <PossiblyInvalidArrayAssignment>
+      <code>$params[$index]['POLYGON']</code>
+    </PossiblyInvalidArrayAssignment>
     <PossiblyNullOperand>
       <code>$x1</code>
       <code>$x1</code>
