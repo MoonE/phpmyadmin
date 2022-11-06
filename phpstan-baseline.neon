@@ -4186,6 +4186,11 @@ parameters:
 			path: libraries/classes/Gis/GisLineString.php
 
 		-
+			message: "#^Cannot access offset int\\<0, max\\> on non\\-empty\\-array\\<'no_of_points'\\|int\\<0, max\\>, array\\{x\\: mixed, y\\: mixed\\}\\|int\\<0, max\\>\\>\\|int\\<1, max\\>\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisMultiLineString.php
+
+		-
 			message: "#^Method PhpMyAdmin\\\\Gis\\\\GisMultiLineString\\:\\:generateParams\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisMultiLineString.php
@@ -4291,6 +4296,16 @@ parameters:
 			path: libraries/classes/Gis/GisMultiPoint.php
 
 		-
+			message: "#^Cannot access offset int\\<0, max\\> on non\\-empty\\-array\\<'no_of_lines'\\|int\\<0, max\\>, array\\{no_of_points\\: int\\<0, max\\>, 0\\?\\: array\\{x\\: mixed, y\\: mixed\\}\\}\\|int\\<1, max\\>\\>\\|int\\<1, max\\>\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisMultiPolygon.php
+
+		-
+			message: "#^Cannot access offset int\\<0, max\\> on non\\-empty\\-array\\<'no_of_points'\\|int\\<0, max\\>, array\\{x\\: mixed, y\\: mixed\\}\\|int\\<0, max\\>\\>\\|int\\<1, max\\>\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisMultiPolygon.php
+
+		-
 			message: "#^Method PhpMyAdmin\\\\Gis\\\\GisMultiPolygon\\:\\:drawPath\\(\\) has parameter \\$scale_data with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisMultiPolygon.php
@@ -4394,6 +4409,11 @@ parameters:
 			message: "#^Parameter \\#7 \\$color of method PhpMyAdmin\\\\Image\\\\ImageWrapper\\:\\:arc\\(\\) expects int, int\\|false given\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisPoint.php
+
+		-
+			message: "#^Cannot access offset int\\<0, max\\> on non\\-empty\\-array\\<'no_of_points'\\|int\\<0, max\\>, array\\{x\\: mixed, y\\: mixed\\}\\|int\\<0, max\\>\\>\\|int\\<1, max\\>\\.$#"
+			count: 1
+			path: libraries/classes/Gis/GisPolygon.php
 
 		-
 			message: "#^Method PhpMyAdmin\\\\Gis\\\\GisPolygon\\:\\:area\\(\\) has parameter \\$ring with no value type specified in iterable type array\\.$#"

@@ -324,16 +324,19 @@ final class GisGeometryCollection extends GisGeometry
      */
     public function generateParams(string $value): array
     {
-        $params = [];
         $data = GisGeometry::generateParams($value);
-        $params['srid'] = $data['srid'];
         $wkt = $data['wkt'];
 
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
         $goem_col = mb_substr($wkt, 19, -1);
         // Split the geometry collection object to get its constituents.
         $sub_parts = $this->explodeGeomCol($goem_col);
-        $params['GEOMETRYCOLLECTION']['geom_count'] = count($sub_parts);
+        $params = [
+            'srid' => $data['srid'],
+            'GEOMETRYCOLLECTION' => [
+                'geom_count' => count($sub_parts),
+            ],
+        ];
 
         $i = 0;
         foreach ($sub_parts as $sub_part) {

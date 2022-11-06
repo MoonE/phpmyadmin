@@ -454,14 +454,18 @@ final class GisMultiPolygon extends GisGeometry
      */
     public function generateParams(string $value, int $index = -1): array
     {
-        $params = [];
         if ($index == -1) {
             $index = 0;
             $data = GisGeometry::generateParams($value);
-            $params['srid'] = $data['srid'];
+            $params = [
+                'srid' => $data['srid'],
+                $index => [],
+            ];
             $wkt = $data['wkt'];
         } else {
-            $params[$index]['gis_type'] = 'MULTIPOLYGON';
+            $params = [
+                $index => ['gis_type' => 'MULTIPOLYGON'],
+            ];
             $wkt = $value;
         }
 
@@ -470,21 +474,22 @@ final class GisMultiPolygon extends GisGeometry
         // Separate each polygon
         $wkt_polygons = explode(')),((', $multipolygon);
 
-        $param_row =& $params[$index]['MULTIPOLYGON'];
-        $param_row['no_of_polygons'] = count($wkt_polygons);
+        $param_row = ['no_of_polygons' => count($wkt_polygons)];
 
         $k = 0;
         foreach ($wkt_polygons as $wkt_polygon) {
             $wkt_rings = explode('),(', $wkt_polygon);
-            $param_row[$k]['no_of_lines'] = count($wkt_rings);
+            $param_row[$k] = ['no_of_lines' => count($wkt_rings)];
             $j = 0;
             foreach ($wkt_rings as $wkt_ring) {
                 $points_arr = $this->extractPoints($wkt_ring, null);
                 $no_of_points = count($points_arr);
-                $param_row[$k][$j]['no_of_points'] = $no_of_points;
+                $param_row[$k][$j] = ['no_of_points' => $no_of_points];
                 for ($i = 0; $i < $no_of_points; $i++) {
-                    $param_row[$k][$j][$i]['x'] = $points_arr[$i][0];
-                    $param_row[$k][$j][$i]['y'] = $points_arr[$i][1];
+                    $param_row[$k][$j][$i] = [
+                        'x' => $points_arr[$i][0],
+                        'y' => $points_arr[$i][1],
+                    ];
                 }
 
                 $j++;
@@ -492,6 +497,8 @@ final class GisMultiPolygon extends GisGeometry
 
             $k++;
         }
+
+        $params[$index]['MULTIPOLYGON'] = $param_row;
 
         return $params;
     }

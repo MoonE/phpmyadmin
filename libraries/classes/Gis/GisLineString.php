@@ -276,14 +276,18 @@ final class GisLineString extends GisGeometry
      */
     public function generateParams(string $value, int $index = -1): array
     {
-        $params = [];
         if ($index == -1) {
             $index = 0;
             $data = GisGeometry::generateParams($value);
-            $params['srid'] = $data['srid'];
+            $params = [
+                'srid' => $data['srid'],
+                $index => [],
+            ];
             $wkt = $data['wkt'];
         } else {
-            $params[$index]['gis_type'] = 'LINESTRING';
+            $params = [
+                $index => ['gis_type' => 'LINESTRING'],
+            ];
             $wkt = $value;
         }
 
@@ -292,11 +296,15 @@ final class GisLineString extends GisGeometry
         $points_arr = $this->extractPoints($linestring, null);
 
         $no_of_points = count($points_arr);
-        $params[$index]['LINESTRING']['no_of_points'] = $no_of_points;
+        $coords = ['no_of_points' => $no_of_points];
         for ($i = 0; $i < $no_of_points; $i++) {
-            $params[$index]['LINESTRING'][$i]['x'] = $points_arr[$i][0];
-            $params[$index]['LINESTRING'][$i]['y'] = $points_arr[$i][1];
+            $coords[$i] = [
+                'x' => $points_arr[$i][0],
+                'y' => $points_arr[$i][1],
+            ];
         }
+
+        $params[$index]['LINESTRING'] = $coords;
 
         return $params;
     }

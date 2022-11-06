@@ -7961,7 +7961,6 @@
     </MixedArgument>
     <MixedAssignment>
       <code>$geom_count</code>
-      <code>$params['srid']</code>
       <code>$type</code>
       <code>$wkt</code>
     </MixedAssignment>
@@ -8003,19 +8002,9 @@
     </MixedArrayAccess>
     <MixedArrayAssignment>
       <code>$params[$index]['LINESTRING']</code>
-      <code>$params[$index]['LINESTRING']</code>
-      <code>$params[$index]['LINESTRING']</code>
-      <code>$params[$index]['LINESTRING'][$i]</code>
-      <code>$params[$index]['LINESTRING'][$i]</code>
-      <code>$params[$index]['LINESTRING'][$i]['x']</code>
-      <code>$params[$index]['LINESTRING'][$i]['y']</code>
-      <code>$params[$index]['LINESTRING']['no_of_points']</code>
     </MixedArrayAssignment>
     <MixedAssignment>
       <code>$no_of_points</code>
-      <code>$params[$index]['LINESTRING'][$i]['x']</code>
-      <code>$params[$index]['LINESTRING'][$i]['y']</code>
-      <code>$params['srid']</code>
       <code>$point</code>
       <code>$point</code>
       <code>$point</code>
@@ -8082,26 +8071,11 @@
     </MixedArrayAccess>
     <MixedArrayAssignment>
       <code>$params[$index]['MULTILINESTRING']</code>
-      <code>$params[$index]['MULTILINESTRING']</code>
-      <code>$params[$index]['MULTILINESTRING']</code>
-      <code>$params[$index]['MULTILINESTRING']</code>
-      <code>$params[$index]['MULTILINESTRING'][$j]</code>
-      <code>$params[$index]['MULTILINESTRING'][$j]</code>
-      <code>$params[$index]['MULTILINESTRING'][$j]</code>
-      <code>$params[$index]['MULTILINESTRING'][$j][$i]</code>
-      <code>$params[$index]['MULTILINESTRING'][$j][$i]</code>
-      <code>$params[$index]['MULTILINESTRING'][$j][$i]['x']</code>
-      <code>$params[$index]['MULTILINESTRING'][$j][$i]['y']</code>
-      <code>$params[$index]['MULTILINESTRING'][$j]['no_of_points']</code>
-      <code>$params[$index]['MULTILINESTRING']['no_of_lines']</code>
     </MixedArrayAssignment>
     <MixedAssignment>
       <code>$data_row</code>
       <code>$no_of_lines</code>
       <code>$no_of_points</code>
-      <code>$params[$index]['MULTILINESTRING'][$j][$i]['x']</code>
-      <code>$params[$index]['MULTILINESTRING'][$j][$i]['y']</code>
-      <code>$params['srid']</code>
       <code>$point</code>
       <code>$point</code>
       <code>$point</code>
@@ -8169,19 +8143,9 @@
     </MixedArrayAccess>
     <MixedArrayAssignment>
       <code>$params[$index]['MULTIPOINT']</code>
-      <code>$params[$index]['MULTIPOINT']</code>
-      <code>$params[$index]['MULTIPOINT']</code>
-      <code>$params[$index]['MULTIPOINT'][$i]</code>
-      <code>$params[$index]['MULTIPOINT'][$i]</code>
-      <code>$params[$index]['MULTIPOINT'][$i]['x']</code>
-      <code>$params[$index]['MULTIPOINT'][$i]['y']</code>
-      <code>$params[$index]['MULTIPOINT']['no_of_points']</code>
     </MixedArrayAssignment>
     <MixedAssignment>
       <code>$no_of_points</code>
-      <code>$params[$index]['MULTIPOINT'][$i]['x']</code>
-      <code>$params[$index]['MULTIPOINT'][$i]['y']</code>
-      <code>$params['srid']</code>
       <code>$point</code>
       <code>$point</code>
       <code>$point</code>
@@ -8234,10 +8198,6 @@
       <code>$label_point[0]</code>
       <code>$label_point[1]</code>
       <code>$label_point[1]</code>
-      <code>$param_row[$k]</code>
-      <code>$param_row[$k][$j]</code>
-      <code>$param_row[$k][$j][$i]</code>
-      <code>$params[$index]['MULTIPOLYGON']</code>
       <code>$point['x']</code>
       <code>$point['y']</code>
       <code>$point[0]</code>
@@ -8260,20 +8220,7 @@
       <code>$row_data['parts'][$j]['points']</code>
     </MixedArrayAccess>
     <MixedArrayAssignment>
-      <code>$param_row[$k]</code>
-      <code>$param_row[$k]</code>
-      <code>$param_row[$k]</code>
-      <code>$param_row[$k]</code>
-      <code>$param_row[$k][$j]</code>
-      <code>$param_row[$k][$j]</code>
-      <code>$param_row[$k][$j]</code>
-      <code>$param_row[$k][$j][$i]</code>
-      <code>$param_row[$k][$j][$i]</code>
-      <code>$param_row[$k][$j][$i]['x']</code>
-      <code>$param_row[$k][$j][$i]['y']</code>
-      <code>$param_row[$k][$j]['no_of_points']</code>
-      <code>$param_row[$k]['no_of_lines']</code>
-      <code>$param_row['no_of_polygons']</code>
+      <code>$params[$index]['MULTIPOLYGON']</code>
       <code>$row_data['parts'][$i]</code>
       <code>$row_data['parts'][$i]</code>
       <code>$row_data['parts'][$i]['isOuter']</code>
@@ -8301,9 +8248,6 @@
       <code>$no_of_lines</code>
       <code>$no_of_points</code>
       <code>$no_of_polygons</code>
-      <code>$param_row[$k][$j][$i]['x']</code>
-      <code>$param_row[$k][$j][$i]['y']</code>
-      <code>$params['srid']</code>
       <code>$point</code>
       <code>$point</code>
       <code>$ring</code>
@@ -8368,14 +8312,8 @@
     </MixedArrayAccess>
     <MixedArrayAssignment>
       <code>$params[$index]['POINT']</code>
-      <code>$params[$index]['POINT']</code>
-      <code>$params[$index]['POINT']['x']</code>
-      <code>$params[$index]['POINT']['y']</code>
     </MixedArrayAssignment>
     <MixedAssignment>
-      <code>$params[$index]['POINT']['x']</code>
-      <code>$params[$index]['POINT']['y']</code>
-      <code>$params['srid']</code>
       <code>$wkt</code>
     </MixedAssignment>
     <MixedOperand>
@@ -8455,18 +8393,6 @@
     </MixedArrayAccess>
     <MixedArrayAssignment>
       <code>$params[$index]['POLYGON']</code>
-      <code>$params[$index]['POLYGON']</code>
-      <code>$params[$index]['POLYGON']</code>
-      <code>$params[$index]['POLYGON']</code>
-      <code>$params[$index]['POLYGON'][$j]</code>
-      <code>$params[$index]['POLYGON'][$j]</code>
-      <code>$params[$index]['POLYGON'][$j]</code>
-      <code>$params[$index]['POLYGON'][$j][$i]</code>
-      <code>$params[$index]['POLYGON'][$j][$i]</code>
-      <code>$params[$index]['POLYGON'][$j][$i]['x']</code>
-      <code>$params[$index]['POLYGON'][$j][$i]['y']</code>
-      <code>$params[$index]['POLYGON'][$j]['no_of_points']</code>
-      <code>$params[$index]['POLYGON']['no_of_lines']</code>
     </MixedArrayAssignment>
     <MixedAssignment>
       <code>$area</code>
@@ -8480,9 +8406,6 @@
       <code>$p1</code>
       <code>$p1</code>
       <code>$p2</code>
-      <code>$params[$index]['POLYGON'][$j][$i]['x']</code>
-      <code>$params[$index]['POLYGON'][$j][$i]['y']</code>
-      <code>$params['srid']</code>
       <code>$point</code>
       <code>$pointA['x']</code>
       <code>$pointA['y']</code>

@@ -298,14 +298,18 @@ final class GisPoint extends GisGeometry
      */
     public function generateParams(string $value, int $index = -1): array
     {
-        $params = [];
         if ($index == -1) {
             $index = 0;
             $data = GisGeometry::generateParams($value);
-            $params['srid'] = $data['srid'];
+            $params = [
+                'srid' => $data['srid'],
+                $index => [],
+            ];
             $wkt = $data['wkt'];
         } else {
-            $params[$index]['gis_type'] = 'POINT';
+            $params = [
+                $index => ['gis_type' => 'POINT'],
+            ];
             $wkt = $value;
         }
 
@@ -313,8 +317,10 @@ final class GisPoint extends GisGeometry
         $point = mb_substr($wkt, 6, -1);
         $points_arr = $this->extractPoints($point, null);
 
-        $params[$index]['POINT']['x'] = $points_arr[0][0];
-        $params[$index]['POINT']['y'] = $points_arr[0][1];
+        $params[$index]['POINT'] = [
+            'x' => $points_arr[0][0],
+            'y' => $points_arr[0][1],
+        ];
 
         return $params;
     }
