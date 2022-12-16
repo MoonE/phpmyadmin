@@ -15,10 +15,8 @@ use function array_merge;
 use function in_array;
 use function intval;
 use function is_array;
-use function mb_strpos;
 use function mb_strtoupper;
-use function mb_substr;
-use function substr;
+use function preg_match;
 use function trim;
 
 /**
@@ -71,9 +69,8 @@ class GisDataEditorController extends AbstractController
                 $gis_data['gis_type'] = mb_strtoupper($type);
             }
 
-            if (isset($value) && trim($value) !== '') {
-                $start = substr($value, 0, 1) == "'" ? 1 : 0;
-                $gis_data['gis_type'] = mb_substr($value, $start, (int) mb_strpos($value, '(') - $start);
+            if (isset($value) && trim($value) !== '' && preg_match('/^\s*(\w+)\b/', $value, $matches)) {
+                $gis_data['gis_type'] = $matches[1];
             }
 
             if (! isset($gis_data['gis_type']) || (! in_array($gis_data['gis_type'], $gis_types))) {
@@ -100,7 +97,7 @@ class GisDataEditorController extends AbstractController
         $srid = isset($gis_data['srid']) && $gis_data['srid'] != '' ? (int) $gis_data['srid'] : 0;
         $wkt = $gis_obj->generateWkt($gis_data, 0);
         $wkt_with_zero = $gis_obj->generateWkt($gis_data, 0, '0');
-        $result = "'" . $wkt . "'," . $srid;
+        $result = $wkt . ',' . $srid;
 
         // Generate SVG based visualization
         $visualizationSettings = [

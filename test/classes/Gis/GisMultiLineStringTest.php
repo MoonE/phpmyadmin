@@ -210,7 +210,7 @@ class GisMultiLineStringTest extends GisGeomTestCase
 
         return [
             [
-                "'MULTILINESTRING((5.02 8.45,6.14 0.15),(1.23 4.25,9.15 0.47))',124",
+                'MULTILINESTRING((5.02 8.45,6.14 0.15),(1.23 4.25,9.15 0.47)),124',
                 null,
                 [
                     'srid' => '124',

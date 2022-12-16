@@ -53,8 +53,8 @@ final class Gis
         $wktval = $wktarr[0] ?? '';
 
         if ($includeSRID) {
-            $srid = $wktarr[1] ?? null;
-            $wktval = "'" . $wktval . "'," . $srid;
+            $srid = $wktarr[1] ?? '';
+            $wktval .= ',' . $srid;
         }
 
         return $wktval;
@@ -87,6 +87,27 @@ final class Gis
     }
 
     /**
+     * @psalm-return array{wkt:string}|array{wkt:string,srid:int}|null
+     */
+    public static function parseGisInput(string $input): ?array
+    {
+        $geom_types = '(?:POINT|MULTIPOINT|LINESTRING|MULTILINESTRING|POLYGON|MULTIPOLYGON|GEOMETRYCOLLECTION)';
+
+        if (preg_match('/^\s*(' . $geom_types . '\(.*\))\s*,\s*([0-9]*)\s*$/i', $input, $matches)) {
+            return [
+                'wkt' => $matches[1],
+                'srid' => (int) $matches[2],
+            ];
+        }
+
+        if (preg_match('/^\s*(' . $geom_types . '\(.*\))\s*$/i', $input, $matches)) {
+            return ['wkt' => $matches[1]];
+        }
+
+        return null;
+    }
+
+    /**
      * Generates GIS data based on the string passed.
      *
      * @param string $gisString    GIS string
@@ -97,17 +118,17 @@ final class Gis
     public static function createData($gisString, $mysqlVersion)
     {
         $geomFromText = $mysqlVersion >= 50600 ? 'ST_GeomFromText' : 'GeomFromText';
-        $gisString = trim($gisString);
-        $geomTypes = '(POINT|MULTIPOINT|LINESTRING|MULTILINESTRING|POLYGON|MULTIPOLYGON|GEOMETRYCOLLECTION)';
-        if (preg_match("/^'" . $geomTypes . "\(.*\)',[0-9]*$/i", $gisString)) {
-            return $geomFromText . '(' . $gisString . ')';
+        $gis = self::parseGisInput($gisString);
+        if ($gis === null) {
+            return $gisString;
         }
 
-        if (preg_match('/^' . $geomTypes . '\(.*\)$/i', $gisString)) {
-            return $geomFromText . "('" . $gisString . "')";
+        $params = "'" . $gis['wkt'] . "'";
+        if (isset($gis['srid'])) {
+            $params .= ',' . $gis['srid'];
         }
 
-        return $gisString;
+        return $geomFromText . '(' . $params . ')';
     }
 
     /**

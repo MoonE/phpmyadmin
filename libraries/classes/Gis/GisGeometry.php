@@ -8,14 +8,13 @@ declare(strict_types=1);
 namespace PhpMyAdmin\Gis;
 
 use PhpMyAdmin\Image\ImageWrapper;
+use PhpMyAdmin\Utils\Gis;
 use TCPDF;
 
 use function explode;
 use function floatval;
-use function mb_strripos;
 use function mb_substr;
 use function mt_getrandmax;
-use function preg_match;
 use function random_int;
 use function sprintf;
 use function str_replace;
@@ -190,21 +189,11 @@ abstract class GisGeometry
      */
     public function generateParams($value)
     {
-        $geom_types = '(POINT|MULTIPOINT|LINESTRING|MULTILINESTRING|POLYGON|MULTIPOLYGON|GEOMETRYCOLLECTION)';
-        $srid = 0;
-        $wkt = '';
-
-        if (preg_match("/^'" . $geom_types . "\(.*\)',[0-9]*$/i", $value)) {
-            $last_comma = mb_strripos($value, ',');
-            $srid = (int) trim(mb_substr($value, $last_comma + 1));
-            $wkt = trim(mb_substr($value, 1, $last_comma - 2));
-        } elseif (preg_match('/^' . $geom_types . '\(.*\)$/i', $value)) {
-            $wkt = $value;
-        }
+        $params = Gis::parseGisInput($value);
 
         return [
-            'srid' => $srid,
-            'wkt' => $wkt,
+            'srid' => $params['srid'] ?? 0,
+            'wkt' => $params['wkt'] ?? '',
         ];
     }
 

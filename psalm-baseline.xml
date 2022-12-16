@@ -6894,10 +6894,6 @@
       <code>$scale_data['x']</code>
       <code>$scale_data['y']</code>
     </MixedOperand>
-    <PossiblyFalseOperand occurrences="2">
-      <code>$last_comma</code>
-      <code>$last_comma</code>
-    </PossiblyFalseOperand>
   </file>
   <file src="libraries/classes/Gis/GisGeometryCollection.php">
     <DocblockTypeContradiction occurrences="2">
@@ -14643,11 +14639,6 @@
     <RedundantCast occurrences="1">
       <code>(string) long2ip((int) $buffer)</code>
     </RedundantCast>
-  </file>
-  <file src="libraries/classes/Utils/Gis.php">
-    <PossiblyNullOperand occurrences="1">
-      <code>$srid</code>
-    </PossiblyNullOperand>
   </file>
   <file src="libraries/classes/Utils/HttpRequest.php">
     <MixedArgument occurrences="1">

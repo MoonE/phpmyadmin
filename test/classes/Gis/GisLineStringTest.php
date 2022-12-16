@@ -128,7 +128,7 @@ class GisLineStringTest extends GisGeomTestCase
 
         return [
             [
-                "'LINESTRING(5.02 8.45,6.14 0.15)',124",
+                'LINESTRING(5.02 8.45,6.14 0.15),124',
                 null,
                 [
                     'srid' => '124',

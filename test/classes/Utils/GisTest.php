@@ -79,7 +79,7 @@ class GisTest extends AbstractTestCase
                 'SELECT ASTEXT(x\'000000000101000000000000000000f03f000000000000f03f\'),'
                 . ' SRID(x\'000000000101000000000000000000f03f000000000000f03f\')',
                 ['POINT(1 1)', '0'],
-                '\'POINT(1 1)\',0',
+                'POINT(1 1),0',
                 true,
                 50300,
             ],
@@ -94,7 +94,7 @@ class GisTest extends AbstractTestCase
                 'SELECT ST_ASTEXT(x\'000000000101000000000000000000f03f000000000000f03f\'),'
                 . ' ST_SRID(x\'000000000101000000000000000000f03f000000000000f03f\')',
                 ['POINT(1 1)', '0'],
-                '\'POINT(1 1)\',0',
+                'POINT(1 1),0',
                 true,
                 50700,
             ],
@@ -102,7 +102,7 @@ class GisTest extends AbstractTestCase
                 'SELECT ST_ASTEXT(x\'000000000101000000000000000000f03f000000000000f03f\', \'axis-order=long-lat\'),'
                 . ' ST_SRID(x\'000000000101000000000000000000f03f000000000000f03f\')',
                 ['POINT(1 1)', '0'],
-                '\'POINT(1 1)\',0',
+                'POINT(1 1),0',
                 true,
                 80001,
             ],
@@ -110,7 +110,7 @@ class GisTest extends AbstractTestCase
                 'SELECT ST_ASTEXT(x\'000000000101000000000000000000f03f000000000000f03f\'),'
                 . ' ST_SRID(x\'000000000101000000000000000000f03f000000000000f03f\')',
                 ['POINT(1 1)', '0'],
-                '\'POINT(1 1)\',0',
+                'POINT(1 1),0',
                 true,
                 50700,
             ],
@@ -134,13 +134,13 @@ class GisTest extends AbstractTestCase
     public function testCreateDataOldMysql(): void
     {
         $this->assertEquals('abc', Gis::createData('abc', 50500));
-        $this->assertEquals('GeomFromText(\'POINT()\',10)', Gis::createData('\'POINT()\',10', 50500));
+        $this->assertEquals('GeomFromText(\'POINT()\',10)', Gis::createData('POINT(),10', 50500));
     }
 
     public function testCreateDataNewMysql(): void
     {
         $this->assertEquals('abc', Gis::createData('abc', 50600));
-        $this->assertEquals('ST_GeomFromText(\'POINT()\',10)', Gis::createData('\'POINT()\',10', 50600));
+        $this->assertEquals('ST_GeomFromText(\'POINT()\',10)', Gis::createData('POINT(),10', 50600));
     }
 
     public function testGetFunctions(): void

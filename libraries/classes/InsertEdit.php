@@ -1605,7 +1605,16 @@ class InsertEdit
             in_array($multiEditFuncs[$key], $gisFromTextFunctions)
             || in_array($multiEditFuncs[$key], $gisFromWkbFunctions)
         ) {
-            return $multiEditFuncs[$key] . "('" . $this->dbi->escapeString($currentValue) . "')";
+            if (preg_match('/^(.*)\s*,\s*([^),\s]+)\s*$/', $currentValue, $matches)) {
+                // WKT / WKB + SRID
+                $params = "'" . $this->dbi->escapeString($matches[1]) . "', '"
+                    . $this->dbi->escapeString($matches[2]) . "'";
+            } else {
+                // WKT / WKB
+                $params = "'" . $this->dbi->escapeString($currentValue) . "'";
+            }
+
+            return $multiEditFuncs[$key] . '(' . $params . ')';
         }
 
         if (

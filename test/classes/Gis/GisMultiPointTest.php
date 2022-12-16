@@ -130,7 +130,7 @@ class GisMultiPointTest extends GisGeomTestCase
 
         return [
             [
-                "'MULTIPOINT(5.02 8.45,6.14 0.15)',124",
+                'MULTIPOINT(5.02 8.45,6.14 0.15),124',
                 null,
                 [
                     'srid' => '124',

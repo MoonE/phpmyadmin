@@ -1555,9 +1555,9 @@ class InsertEditTest extends AbstractTestCase
             [
                 false,
                 '',
-                "'',",
+                ',',
                 null,
-                '<input type="hidden" name="fields_preva" value="\'\',">',
+                '<input type="hidden" name="fields_preva" value=",">',
             ],
             $result
         );
@@ -2464,6 +2464,33 @@ class InsertEditTest extends AbstractTestCase
             '0'
         );
         $this->assertTrue(password_verify("a'c", mb_substr($result, 1, -1)));
+
+        // GIS: Geometry without SRID
+        $multi_edit_funcs = ['ST_GeomFromText'];
+        $result = $this->insertEdit->getCurrentValueAsAnArrayForMultipleEdit(
+            $multi_edit_funcs,
+            $multi_edit_salt,
+            $multi_edit_funcs,
+            'POINT(1 2)',
+            [],
+            [],
+            [],
+            '0'
+        );
+        $this->assertEquals("ST_GeomFromText('POINT(1 2)')", $result);
+
+        // GIS: Geometry with SRID
+        $result = $this->insertEdit->getCurrentValueAsAnArrayForMultipleEdit(
+            $multi_edit_funcs,
+            $multi_edit_salt,
+            $multi_edit_funcs,
+            'POINT(1 2),4326',
+            [],
+            [],
+            [],
+            '0'
+        );
+        $this->assertEquals("ST_GeomFromText('POINT(1 2)', '4326')", $result);
     }
 
     /**
