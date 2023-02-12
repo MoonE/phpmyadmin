@@ -4106,11 +4106,6 @@ parameters:
 			path: libraries/classes/Gis/GisGeometry.php
 
 		-
-			message: "#^Method PhpMyAdmin\\\\Gis\\\\GisGeometryCollection\\:\\:explodeGeomCol\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: libraries/classes/Gis/GisGeometryCollection.php
-
-		-
 			message: "#^Method PhpMyAdmin\\\\Gis\\\\GisGeometryCollection\\:\\:generateParams\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: libraries/classes/Gis/GisGeometryCollection.php

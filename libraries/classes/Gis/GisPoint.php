@@ -51,7 +51,7 @@ final class GisPoint extends GisGeometry
      *
      * @return array an array containing the min, max values for x and y coordinates
      */
-    public function scaleRow($spatial)
+    public function scaleRow(string $spatial): array
     {
         // Trim to remove leading 'POINT(' and trailing ')'
         $point = mb_substr($spatial, 6, -1);
@@ -120,12 +120,12 @@ final class GisPoint extends GisGeometry
      * @return TCPDF the modified TCPDF instance
      */
     public function prepareRowAsPdf(
-        $spatial,
+        string $spatial,
         string $label,
         array $color,
         array $scale_data,
-        $pdf
-    ) {
+        TCPDF $pdf
+    ): TCPDF {
         $line = [
             'width' => 1.25,
             'color' => $color,
@@ -159,7 +159,7 @@ final class GisPoint extends GisGeometry
      *
      * @return string the code related to a row in the GIS dataset
      */
-    public function prepareRowAsSvg($spatial, string $label, array $color, array $scale_data)
+    public function prepareRowAsSvg(string $spatial, string $label, array $color, array $scale_data): string
     {
         $point_options = [
             'name' => $label,
@@ -201,12 +201,12 @@ final class GisPoint extends GisGeometry
      * @return string JavaScript related to a row in the GIS dataset
      */
     public function prepareRowAsOl(
-        $spatial,
+        string $spatial,
         int $srid,
         string $label,
         array $color,
         array $scale_data
-    ) {
+    ): string {
         $fill_style = ['color' => 'white'];
         $stroke_style = [
             'color' => $color,
@@ -280,7 +280,7 @@ final class GisPoint extends GisGeometry
      *
      * @return string the WKT for the data from ESRI shape files
      */
-    public function getShape(array $row_data)
+    public function getShape(array $row_data): string
     {
         return 'POINT(' . ($row_data['x'] ?? '')
         . ' ' . ($row_data['y'] ?? '') . ')';
@@ -294,7 +294,7 @@ final class GisPoint extends GisGeometry
      *
      * @return array params for the GIS data editor from the value of the GIS column
      */
-    public function generateParams($value, $index = -1)
+    public function generateParams(string $value, int $index = -1): array
     {
         $params = [];
         if ($index == -1) {

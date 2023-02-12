@@ -52,7 +52,7 @@ final class GisMultiPoint extends GisGeometry
      *
      * @return array an array containing the min, max values for x and y coordinates
      */
-    public function scaleRow($spatial)
+    public function scaleRow(string $spatial): array
     {
         // Trim to remove leading 'MULTIPOINT(' and trailing ')'
         $multipoint = mb_substr($spatial, 11, -1);
@@ -69,7 +69,7 @@ final class GisMultiPoint extends GisGeometry
      * @param array  $scale_data Array containing data related to scaling
      */
     public function prepareRowAsPng(
-        $spatial,
+        string $spatial,
         string $label,
         array $color,
         array $scale_data,
@@ -126,12 +126,12 @@ final class GisMultiPoint extends GisGeometry
      * @return TCPDF the modified TCPDF instance
      */
     public function prepareRowAsPdf(
-        $spatial,
+        string $spatial,
         string $label,
         array $color,
         array $scale_data,
-        $pdf
-    ) {
+        TCPDF $pdf
+    ): TCPDF {
         $line = [
             'width' => 1.25,
             'color' => $color,
@@ -170,7 +170,7 @@ final class GisMultiPoint extends GisGeometry
      *
      * @return string the code related to a row in the GIS dataset
      */
-    public function prepareRowAsSvg($spatial, string $label, array $color, array $scale_data)
+    public function prepareRowAsSvg(string $spatial, string $label, array $color, array $scale_data): string
     {
         $point_options = [
             'name' => $label,
@@ -216,12 +216,12 @@ final class GisMultiPoint extends GisGeometry
      * @return string JavaScript related to a row in the GIS dataset
      */
     public function prepareRowAsOl(
-        $spatial,
+        string $spatial,
         int $srid,
         string $label,
         array $color,
         array $scale_data
-    ) {
+    ): string {
         $fill_style = ['color' => 'white'];
         $stroke_style = [
             'color' => $color,
@@ -302,7 +302,7 @@ final class GisMultiPoint extends GisGeometry
      *
      * @return string the WKT for the data from ESRI shape files
      */
-    public function getShape(array $row_data)
+    public function getShape(array $row_data): string
     {
         $wkt = 'MULTIPOINT(';
         for ($i = 0; $i < $row_data['numpoints']; $i++) {
@@ -323,7 +323,7 @@ final class GisMultiPoint extends GisGeometry
      *
      * @return array params for the GIS data editor from the value of the GIS column
      */
-    public function generateParams($value, $index = -1)
+    public function generateParams(string $value, int $index = -1): array
     {
         $params = [];
         if ($index == -1) {

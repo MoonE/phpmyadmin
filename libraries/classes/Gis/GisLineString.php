@@ -52,7 +52,7 @@ final class GisLineString extends GisGeometry
      *
      * @return array an array containing the min, max values for x and y coordinates
      */
-    public function scaleRow($spatial)
+    public function scaleRow(string $spatial): array
     {
         // Trim to remove leading 'LINESTRING(' and trailing ')'
         $linestring = mb_substr($spatial, 11, -1);
@@ -69,7 +69,7 @@ final class GisLineString extends GisGeometry
      * @param array  $scale_data Array containing data related to scaling
      */
     public function prepareRowAsPng(
-        $spatial,
+        string $spatial,
         string $label,
         array $color,
         array $scale_data,
@@ -123,7 +123,7 @@ final class GisLineString extends GisGeometry
      *
      * @return TCPDF the modified TCPDF instance
      */
-    public function prepareRowAsPdf($spatial, string $label, array $color, array $scale_data, $pdf)
+    public function prepareRowAsPdf(string $spatial, string $label, array $color, array $scale_data, TCPDF $pdf): TCPDF
     {
         $line = [
             'width' => 1.5,
@@ -163,7 +163,7 @@ final class GisLineString extends GisGeometry
      *
      * @return string the code related to a row in the GIS dataset
      */
-    public function prepareRowAsSvg($spatial, string $label, array $color, array $scale_data)
+    public function prepareRowAsSvg(string $spatial, string $label, array $color, array $scale_data): string
     {
         $line_options = [
             'name' => $label,
@@ -205,7 +205,7 @@ final class GisLineString extends GisGeometry
      *
      * @return string JavaScript related to a row in the GIS dataset
      */
-    public function prepareRowAsOl($spatial, int $srid, string $label, array $color, array $scale_data)
+    public function prepareRowAsOl(string $spatial, int $srid, string $label, array $color, array $scale_data): string
     {
         $stroke_style = [
             'color' => $color,
@@ -276,7 +276,7 @@ final class GisLineString extends GisGeometry
      *
      * @return array params for the GIS data editor from the value of the GIS column
      */
-    public function generateParams($value, $index = -1)
+    public function generateParams(string $value, int $index = -1): array
     {
         $params = [];
         if ($index == -1) {

@@ -51,7 +51,7 @@ final class GisGeometryCollection extends GisGeometry
      *
      * @return array array containing the min, max values for x and y coordinates
      */
-    public function scaleRow($spatial)
+    public function scaleRow(string $spatial): array
     {
         $min_max = [];
 
@@ -112,7 +112,7 @@ final class GisGeometryCollection extends GisGeometry
      * @param array  $scale_data Array containing data related to scaling
      */
     public function prepareRowAsPng(
-        $spatial,
+        string $spatial,
         string $label,
         array $color,
         array $scale_data,
@@ -153,7 +153,7 @@ final class GisGeometryCollection extends GisGeometry
      *
      * @return TCPDF the modified TCPDF instance
      */
-    public function prepareRowAsPdf($spatial, string $label, array $color, array $scale_data, $pdf)
+    public function prepareRowAsPdf(string $spatial, string $label, array $color, array $scale_data, TCPDF $pdf): TCPDF
     {
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
         $goem_col = mb_substr($spatial, 19, -1);
@@ -189,7 +189,7 @@ final class GisGeometryCollection extends GisGeometry
      *
      * @return string the code related to a row in the GIS dataset
      */
-    public function prepareRowAsSvg($spatial, string $label, array $color, array $scale_data)
+    public function prepareRowAsSvg(string $spatial, string $label, array $color, array $scale_data): string
     {
         $row = '';
 
@@ -229,7 +229,7 @@ final class GisGeometryCollection extends GisGeometry
      *
      * @return string JavaScript related to a row in the GIS dataset
      */
-    public function prepareRowAsOl($spatial, int $srid, string $label, array $color, array $scale_data)
+    public function prepareRowAsOl(string $spatial, int $srid, string $label, array $color, array $scale_data): string
     {
         $row = '';
 
@@ -262,9 +262,9 @@ final class GisGeometryCollection extends GisGeometry
      *
      * @param string $geom_col geometry collection string
      *
-     * @return array the constituents of the geometry collection object
+     * @return string[] the constituents of the geometry collection object
      */
-    private function explodeGeomCol($geom_col)
+    private function explodeGeomCol(string $geom_col): array
     {
         $sub_parts = [];
         $br_count = 0;
@@ -328,7 +328,7 @@ final class GisGeometryCollection extends GisGeometry
      *
      * @return array parameters for the GIS editor from the value of the GIS column
      */
-    public function generateParams($value)
+    public function generateParams(string $value): array
     {
         $params = [];
         $data = GisGeometry::generateParams($value);

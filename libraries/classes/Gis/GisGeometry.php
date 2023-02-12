@@ -37,7 +37,7 @@ abstract class GisGeometry
      *
      * @return string the code related to a row in the GIS dataset
      */
-    abstract public function prepareRowAsSvg($spatial, string $label, array $color, array $scale_data);
+    abstract public function prepareRowAsSvg(string $spatial, string $label, array $color, array $scale_data): string;
 
     /**
      * Adds to the PNG image object, the data related to a row in the GIS dataset.
@@ -48,7 +48,7 @@ abstract class GisGeometry
      * @param array  $scale_data Array containing data related to scaling
      */
     abstract public function prepareRowAsPng(
-        $spatial,
+        string $spatial,
         string $label,
         array $color,
         array $scale_data,
@@ -67,12 +67,12 @@ abstract class GisGeometry
      * @return TCPDF the modified TCPDF instance
      */
     abstract public function prepareRowAsPdf(
-        $spatial,
+        string $spatial,
         string $label,
         array $color,
         array $scale_data,
-        $pdf
-    );
+        TCPDF $pdf
+    ): TCPDF;
 
     /**
      * Prepares the JavaScript related to a row in the GIS dataset
@@ -87,12 +87,12 @@ abstract class GisGeometry
      * @return string the JavaScript related to a row in the GIS dataset
      */
     abstract public function prepareRowAsOl(
-        $spatial,
+        string $spatial,
         int $srid,
         string $label,
         array $color,
         array $scale_data
-    );
+    ): string;
 
     /**
      * Scales each row.
@@ -101,7 +101,7 @@ abstract class GisGeometry
      *
      * @return array array containing the min, max values for x and y coordinates
      */
-    abstract public function scaleRow($spatial);
+    abstract public function scaleRow(string $spatial): array;
 
     /**
      * Generates the WKT with the set of parameters passed by the GIS editor.
@@ -147,7 +147,7 @@ abstract class GisGeometry
      *
      * @return array the updated min, max values
      */
-    protected function setMinMax($point_set, array $min_max)
+    protected function setMinMax(string $point_set, array $min_max): array
     {
         // Separate each point
         $points = explode(',', $point_set);
@@ -189,7 +189,7 @@ abstract class GisGeometry
      *
      * @return array parameters for the GIS editor from the value of the GIS column
      */
-    public function generateParams($value)
+    public function generateParams(string $value): array
     {
         $geom_types = '(POINT|MULTIPOINT|LINESTRING|MULTILINESTRING|POLYGON|MULTIPOLYGON|GEOMETRYCOLLECTION)';
         $srid = 0;
