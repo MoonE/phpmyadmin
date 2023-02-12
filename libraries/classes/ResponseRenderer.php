@@ -28,7 +28,6 @@ use const PHP_SAPI;
 class ResponseRenderer
 {
     /**
-     * @static
      * @var ResponseRenderer|null
      */
     private static $instance = null;

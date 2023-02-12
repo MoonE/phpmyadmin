@@ -65,8 +65,6 @@ class Tracker
 
     /**
      * Gets the on/off value of the Tracker module, starts initialization.
-     *
-     * @static
      */
     public static function isActive(): bool
     {
@@ -93,8 +91,6 @@ class Tracker
      * @param string $string part of SQL statement
      *
      * @return string the name of table
-     *
-     * @static
      */
     protected static function getTableName($string)
     {
@@ -119,8 +115,6 @@ class Tracker
      *
      * @param string $dbName    name of database
      * @param string $tableName name of table
-     *
-     * @static
      */
     public static function isTracked($dbName, $tableName): bool
     {
@@ -183,8 +177,6 @@ class Tracker
      * @param string $version     version
      * @param string $trackingSet set of tracking statements
      * @param bool   $isView      if table is a view
-     *
-     * @static
      */
     public static function createVersion(
         $dbName,
@@ -405,8 +397,6 @@ class Tracker
      * @param string       $version   version
      * @param string       $type      type of data(DDL || DML)
      * @param string|array $newData   the new tracking data
-     *
-     * @static
      */
     public static function changeTrackingData(
         $dbName,
@@ -491,8 +481,6 @@ class Tracker
      * @param string $statement tracked statement
      *
      * @return int (-1 if no version exists | >  0 if a version exists)
-     *
-     * @static
      */
     public static function getVersion(string $dbname, string $tablename, ?string $statement = null)
     {
@@ -680,8 +668,6 @@ class Tracker
      * @param string $query query
      *
      * @return array containing identifier, type and tablename.
-     *
-     * @static
      * @todo: using PMA SQL Parser when possible
      * @todo: support multi-table/view drops
      */
@@ -814,8 +800,6 @@ class Tracker
      * Analyzes a given SQL statement and saves tracking data.
      *
      * @param string $query a SQL query
-     *
-     * @static
      */
     public static function handleQuery($query): void
     {

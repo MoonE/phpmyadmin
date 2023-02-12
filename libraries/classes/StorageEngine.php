@@ -98,7 +98,6 @@ class StorageEngine
      *
      * @return array[] array of storage engines
      *
-     * @static
      * @staticvar array $storage_engines storage engines
      */
     public static function getStorageEngines()
@@ -254,8 +253,6 @@ class StorageEngine
      * @param string $engine The engine ID
      *
      * @return StorageEngine The engine plugin
-     *
-     * @static
      */
     public static function getEngine($engine)
     {
@@ -305,8 +302,6 @@ class StorageEngine
      * Returns true if given engine name is supported/valid, otherwise false
      *
      * @param string $engine name of engine
-     *
-     * @static
      */
     public static function isValid($engine): bool
     {
