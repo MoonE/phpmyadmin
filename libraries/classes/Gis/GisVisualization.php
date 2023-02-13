@@ -90,12 +90,10 @@ class GisVisualization
      * @param array  $options   Users specified options
      * @param int    $row       number of rows
      * @param int    $pos       start position
-     *
-     * @return GisVisualization
      */
-    public static function get($sql_query, array $options, $row, $pos)
+    public static function get($sql_query, array $options, $row, $pos): self
     {
-        return new GisVisualization($sql_query, $options, $row, $pos);
+        return new self($sql_query, $options, $row, $pos);
     }
 
     /**
@@ -104,12 +102,10 @@ class GisVisualization
      * @param array $data    Raw data, if set, parameters other than $options will be
      *                       ignored
      * @param array $options Users specified options
-     *
-     * @return GisVisualization
      */
-    public static function getByData(array $data, array $options)
+    public static function getByData(array $data, array $options): self
     {
-        return new GisVisualization(null, $options, null, null, $data);
+        return new self(null, $options, null, null, $data);
     }
 
     /**

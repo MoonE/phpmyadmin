@@ -26,10 +26,9 @@ use function trim;
 /**
  * Handles actions related to GIS POLYGON objects
  */
-class GisPolygon extends GisGeometry
+final class GisPolygon extends GisGeometry
 {
-    /** @var self */
-    private static $instance;
+    private static ?self $instance = null;
 
     /**
      * A private constructor; prevents direct creation of object.
@@ -41,12 +40,12 @@ class GisPolygon extends GisGeometry
     /**
      * Returns the singleton.
      *
-     * @return GisPolygon the singleton
+     * @return self the singleton
      */
-    public static function singleton()
+    public static function singleton(): self
     {
-        if (! isset(self::$instance)) {
-            self::$instance = new GisPolygon();
+        if (! self::$instance) {
+            self::$instance = new self();
         }
 
         return self::$instance;

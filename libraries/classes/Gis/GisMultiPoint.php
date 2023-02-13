@@ -20,10 +20,9 @@ use function trim;
 /**
  * Handles actions related to GIS MULTIPOINT objects
  */
-class GisMultiPoint extends GisGeometry
+final class GisMultiPoint extends GisGeometry
 {
-    /** @var self */
-    private static $instance;
+    private static ?self $instance = null;
 
     /**
      * A private constructor; prevents direct creation of object.
@@ -35,12 +34,12 @@ class GisMultiPoint extends GisGeometry
     /**
      * Returns the singleton.
      *
-     * @return GisMultiPoint the singleton
+     * @return self the singleton
      */
     public static function singleton()
     {
-        if (! isset(self::$instance)) {
-            self::$instance = new GisMultiPoint();
+        if (! self::$instance) {
+            self::$instance = new self();
         }
 
         return self::$instance;

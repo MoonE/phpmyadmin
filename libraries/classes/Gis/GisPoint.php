@@ -19,10 +19,9 @@ use function trim;
 /**
  * Handles actions related to GIS POINT objects
  */
-class GisPoint extends GisGeometry
+final class GisPoint extends GisGeometry
 {
-    /** @var self */
-    private static $instance;
+    private static ?self $instance = null;
 
     /**
      * A private constructor; prevents direct creation of object.
@@ -34,12 +33,12 @@ class GisPoint extends GisGeometry
     /**
      * Returns the singleton.
      *
-     * @return GisPoint the singleton
+     * @return self the singleton
      */
-    public static function singleton()
+    public static function singleton(): self
     {
-        if (! isset(self::$instance)) {
-            self::$instance = new GisPoint();
+        if (! self::$instance) {
+            self::$instance = new self();
         }
 
         return self::$instance;

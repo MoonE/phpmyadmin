@@ -19,10 +19,9 @@ use function str_split;
 /**
  * Handles actions related to GIS GEOMETRYCOLLECTION objects
  */
-class GisGeometryCollection extends GisGeometry
+final class GisGeometryCollection extends GisGeometry
 {
-    /** @var self */
-    private static $instance;
+    private static ?self $instance = null;
 
     /**
      * A private constructor; prevents direct creation of object.
@@ -34,12 +33,12 @@ class GisGeometryCollection extends GisGeometry
     /**
      * Returns the singleton.
      *
-     * @return GisGeometryCollection the singleton
+     * @return self the singleton
      */
-    public static function singleton()
+    public static function singleton(): self
     {
-        if (! isset(self::$instance)) {
-            self::$instance = new GisGeometryCollection();
+        if (! self::$instance) {
+            self::$instance = new self();
         }
 
         return self::$instance;

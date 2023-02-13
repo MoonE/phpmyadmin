@@ -21,10 +21,9 @@ use function trim;
 /**
  * Handles actions related to GIS MULTILINESTRING objects
  */
-class GisMultiLineString extends GisGeometry
+final class GisMultiLineString extends GisGeometry
 {
-    /** @var self */
-    private static $instance;
+    private static ?self $instance = null;
 
     /**
      * A private constructor; prevents direct creation of object.
@@ -36,12 +35,12 @@ class GisMultiLineString extends GisGeometry
     /**
      * Returns the singleton.
      *
-     * @return GisMultiLineString the singleton
+     * @return self the singleton
      */
-    public static function singleton()
+    public static function singleton(): self
     {
-        if (! isset(self::$instance)) {
-            self::$instance = new GisMultiLineString();
+        if (! self::$instance) {
+            self::$instance = new self();
         }
 
         return self::$instance;

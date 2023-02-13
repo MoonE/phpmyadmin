@@ -8021,9 +8021,6 @@
       <code>$type</code>
       <code>$wkt</code>
     </MixedAssignment>
-    <RedundantPropertyInitializationCheck>
-      <code>isset(self::$instance)</code>
-    </RedundantPropertyInitializationCheck>
   </file>
   <file src="libraries/classes/Gis/GisLineString.php">
     <MixedArgument>
@@ -8096,9 +8093,6 @@
       <code>$black</code>
       <code>$line_color</code>
     </PossiblyFalseArgument>
-    <RedundantPropertyInitializationCheck>
-      <code>isset(self::$instance)</code>
-    </RedundantPropertyInitializationCheck>
   </file>
   <file src="libraries/classes/Gis/GisMultiLineString.php">
     <MixedArgument>
@@ -8188,9 +8182,6 @@
       <code>$black</code>
       <code>$line_color</code>
     </PossiblyFalseArgument>
-    <RedundantPropertyInitializationCheck>
-      <code>isset(self::$instance)</code>
-    </RedundantPropertyInitializationCheck>
   </file>
   <file src="libraries/classes/Gis/GisMultiPoint.php">
     <MixedArgument>
@@ -8269,9 +8260,6 @@
       <code>$black</code>
       <code>$point_color</code>
     </PossiblyFalseArgument>
-    <RedundantPropertyInitializationCheck>
-      <code>isset(self::$instance)</code>
-    </RedundantPropertyInitializationCheck>
   </file>
   <file src="libraries/classes/Gis/GisMultiPolygon.php">
     <ArgumentTypeCoercion>
@@ -8402,9 +8390,6 @@
       <code>$black</code>
       <code>$fill_color</code>
     </PossiblyFalseArgument>
-    <RedundantPropertyInitializationCheck>
-      <code>isset(self::$instance)</code>
-    </RedundantPropertyInitializationCheck>
   </file>
   <file src="libraries/classes/Gis/GisPoint.php">
     <MixedArgument>
@@ -8465,9 +8450,6 @@
       <code>$black</code>
       <code>$point_color</code>
     </PossiblyFalseArgument>
-    <RedundantPropertyInitializationCheck>
-      <code>isset(self::$instance)</code>
-    </RedundantPropertyInitializationCheck>
   </file>
   <file src="libraries/classes/Gis/GisPolygon.php">
     <ArgumentTypeCoercion>
@@ -8644,9 +8626,6 @@
       <code>$y1</code>
       <code>$y1</code>
     </PossiblyNullOperand>
-    <RedundantPropertyInitializationCheck>
-      <code>isset(self::$instance)</code>
-    </RedundantPropertyInitializationCheck>
   </file>
   <file src="libraries/classes/Gis/GisVisualization.php">
     <DocblockTypeContradiction>

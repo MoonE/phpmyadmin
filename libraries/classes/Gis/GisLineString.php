@@ -20,10 +20,9 @@ use function trim;
 /**
  * Handles actions related to GIS LINESTRING objects
  */
-class GisLineString extends GisGeometry
+final class GisLineString extends GisGeometry
 {
-    /** @var self */
-    private static $instance;
+    private static ?self $instance = null;
 
     /**
      * A private constructor; prevents direct creation of object.
@@ -35,12 +34,12 @@ class GisLineString extends GisGeometry
     /**
      * Returns the singleton.
      *
-     * @return GisLineString the singleton
+     * @return self the singleton
      */
-    public static function singleton()
+    public static function singleton(): self
     {
-        if (! isset(self::$instance)) {
-            self::$instance = new GisLineString();
+        if (! self::$instance) {
+            self::$instance = new self();
         }
 
         return self::$instance;
