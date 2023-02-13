@@ -286,21 +286,19 @@ class GisVisualization
     private function svg()
     {
         $this->init();
+        $scale_data = $this->scaleDataSet($this->data);
+        /** @var string $svg */
+        $svg = $this->prepareDataSet($this->data, $scale_data, 'svg');
 
-        $output = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
+        return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
             . "\n"
             . '<svg version="1.1" xmlns:svg="http://www.w3.org/2000/svg"'
             . ' xmlns="http://www.w3.org/2000/svg"'
             . ' width="' . intval($this->settings['width']) . '"'
             . ' height="' . intval($this->settings['height']) . '">'
-            . '<g id="groupPanel">';
-
-        $scale_data = $this->scaleDataSet($this->data);
-        $output .= $this->prepareDataSet($this->data, $scale_data, 'svg', '');
-
-        $output .= '</g></svg>';
-
-        return $output;
+            . '<g id="groupPanel">'
+            . $svg
+            . '</g></svg>';
     }
 
     /**
@@ -344,8 +342,7 @@ class GisVisualization
         }
 
         $scale_data = $this->scaleDataSet($this->data);
-        /** @var ImageWrapper $image */
-        $image = $this->prepareDataSet($this->data, $scale_data, 'png', $image);
+        $this->prepareDataSet($this->data, $scale_data, 'png', $image);
 
         return $image;
     }
@@ -400,7 +397,10 @@ class GisVisualization
     {
         $this->init();
         $scale_data = $this->scaleDataSet($this->data);
-        $output = 'function drawOpenLayers() {'
+        /** @var string $olCode */
+        $olCode = $this->prepareDataSet($this->data, $scale_data, 'ol');
+
+        return 'function drawOpenLayers() {'
             . 'if (typeof ol !== "undefined") {'
             . 'var olCss = "js/vendor/openlayers/theme/ol.css";'
             . '$(\'head\').append(\'<link rel="stylesheet" type="text/css" href=\'+olCss+\'>\');'
@@ -424,14 +424,12 @@ class GisVisualization
             . 'projection: \'EPSG:4326\'}),'
             . 'new ol.control.Zoom,'
             . 'new ol.control.Attribution]'
-            . '});';
-        $output .= $this->prepareDataSet($this->data, $scale_data, 'ol', '')
+            . '});'
+            . $olCode
             . 'return map;'
             . '}'
             . 'return undefined;'
             . '}';
-
-        return $output;
     }
 
     /**
@@ -457,7 +455,7 @@ class GisVisualization
         $pdf->AddPage();
 
         $scale_data = $this->scaleDataSet($this->data);
-        $pdf = $this->prepareDataSet($this->data, $scale_data, 'pdf', $pdf);
+        $this->prepareDataSet($this->data, $scale_data, 'pdf', $pdf);
 
         // sanitize file name
         $file_name = $this->sanitizeName($file_name, 'pdf');
@@ -600,19 +598,24 @@ class GisVisualization
     /**
      * Prepares and return the dataset as needed by the visualization.
      *
-     * @param array                           $data       Raw data
-     * @param array                           $scale_data Data related to scaling
-     * @param string                          $format     Format of the visualization
-     * @param ImageWrapper|TCPDF|string|false $results    Image object in the case of png
-     *                                                    TCPDF object in the case of pdf
+     * @param array                   $data       Raw data
+     * @param array                   $scale_data Data related to scaling
+     * @param string                  $format     Format of the visualization
+     * @param ImageWrapper|TCPDF|null $renderer   ImageWrapper object in the case of png
+     *                                            TCPDF object in the case of pdf
      *
-     * @return mixed the formatted array of data
+     * @return string|null The svg or ol strimg or null
      */
-    private function prepareDataSet(array $data, array $scale_data, $format, $results)
-    {
+    private function prepareDataSet(
+        array $data,
+        array $scale_data,
+        string $format,
+        ImageWrapper|TCPDF|null $renderer = null
+    ): ?string {
         /** @var int[][] $colors */
         $colors = $this->settings['colors'];
         $color_index = 0;
+        $result = '';
 
         foreach ($data as $row) {
             // Figure out the data type
@@ -636,30 +639,30 @@ class GisVisualization
             $label = trim((string) ($row[$this->settings['labelColumn']] ?? ''));
 
             if ($format === 'svg') {
-                $results .= $gis_obj->prepareRowAsSvg(
+                $result .= $gis_obj->prepareRowAsSvg(
                     $wkt,
                     $label,
                     $color,
                     $scale_data
                 );
             } elseif ($format === 'png') {
-                $results = $gis_obj->prepareRowAsPng(
+                $gis_obj->prepareRowAsPng(
                     $wkt,
                     $label,
                     $color,
                     $scale_data,
-                    $results
+                    $renderer
                 );
-            } elseif ($format === 'pdf' && $results instanceof TCPDF) {
-                $results = $gis_obj->prepareRowAsPdf(
+            } elseif ($format === 'pdf') {
+                $gis_obj->prepareRowAsPdf(
                     $wkt,
                     $label,
                     $color,
                     $scale_data,
-                    $results
+                    $renderer
                 );
             } elseif ($format === 'ol') {
-                $results .= $gis_obj->prepareRowAsOl(
+                $result .= $gis_obj->prepareRowAsOl(
                     $wkt,
                     (int) $row['srid'],
                     $label,
@@ -671,7 +674,7 @@ class GisVisualization
             $color_index = ($color_index + 1) % count($colors);
         }
 
-        return $results;
+        return $format === 'svg' || $format === 'ol' ? $result : null;
     }
 
     /**

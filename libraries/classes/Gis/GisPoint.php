@@ -73,7 +73,7 @@ final class GisPoint extends GisGeometry
         array $color,
         array $scale_data,
         ImageWrapper $image
-    ): ImageWrapper {
+    ): void {
         // allocate colors
         $black = $image->colorAllocate(0, 0, 0);
         $point_color = $image->colorAllocate(...$color);
@@ -83,29 +83,31 @@ final class GisPoint extends GisGeometry
         $points_arr = $this->extractPoints($point, $scale_data);
 
         // draw a small circle to mark the point
-        if ($points_arr[0][0] != '' && $points_arr[0][1] != '') {
-            $image->arc(
-                (int) round($points_arr[0][0]),
-                (int) round($points_arr[0][1]),
-                7,
-                7,
-                0,
-                360,
-                $point_color
-            );
-            // print label if applicable
-            if ($label !== '') {
-                $image->string(
-                    1,
-                    (int) round($points_arr[0][0]),
-                    (int) round($points_arr[0][1]),
-                    $label,
-                    $black
-                );
-            }
+        if ($points_arr[0][0] == '' || $points_arr[0][1] == '') {
+            return;
         }
 
-        return $image;
+        $image->arc(
+            (int) round($points_arr[0][0]),
+            (int) round($points_arr[0][1]),
+            7,
+            7,
+            0,
+            360,
+            $point_color
+        );
+        if ($label === '') {
+            return;
+        }
+
+        // print label
+        $image->string(
+            1,
+            (int) round($points_arr[0][0]),
+            (int) round($points_arr[0][1]),
+            $label,
+            $black
+        );
     }
 
     /**
@@ -116,8 +118,6 @@ final class GisPoint extends GisGeometry
      * @param int[]  $color      Color for the GIS POINT object
      * @param array  $scale_data Array containing data related to scaling
      * @param TCPDF  $pdf        TCPDF instance
-     *
-     * @return TCPDF the modified TCPDF instance
      */
     public function prepareRowAsPdf(
         string $spatial,
@@ -125,7 +125,7 @@ final class GisPoint extends GisGeometry
         array $color,
         array $scale_data,
         TCPDF $pdf
-    ): TCPDF {
+    ): void {
         $line = [
             'width' => 1.25,
             'color' => $color,
@@ -136,17 +136,19 @@ final class GisPoint extends GisGeometry
         $points_arr = $this->extractPoints($point, $scale_data);
 
         // draw a small circle to mark the point
-        if ($points_arr[0][0] != '' && $points_arr[0][1] != '') {
-            $pdf->Circle($points_arr[0][0], $points_arr[0][1], 2, 0, 360, 'D', $line);
-            // print label if applicable
-            if ($label !== '') {
-                $pdf->setXY($points_arr[0][0], $points_arr[0][1]);
-                $pdf->setFontSize(5);
-                $pdf->Cell(0, 0, $label);
-            }
+        if ($points_arr[0][0] == '' || $points_arr[0][1] == '') {
+            return;
         }
 
-        return $pdf;
+        $pdf->Circle($points_arr[0][0], $points_arr[0][1], 2, 0, 360, 'D', $line);
+        if ($label === '') {
+            return;
+        }
+
+        // print label
+        $pdf->setXY($points_arr[0][0], $points_arr[0][1]);
+        $pdf->setFontSize(5);
+        $pdf->Cell(0, 0, $label);
     }
 
     /**

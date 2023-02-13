@@ -117,7 +117,7 @@ final class GisGeometryCollection extends GisGeometry
         array $color,
         array $scale_data,
         ImageWrapper $image
-    ): ImageWrapper {
+    ): void {
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
         $goem_col = mb_substr($spatial, 19, -1);
         // Split the geometry collection object to get its constituents.
@@ -136,10 +136,8 @@ final class GisGeometryCollection extends GisGeometry
                 continue;
             }
 
-            $image = $gis_obj->prepareRowAsPng($sub_part, $label, $color, $scale_data, $image);
+            $gis_obj->prepareRowAsPng($sub_part, $label, $color, $scale_data, $image);
         }
-
-        return $image;
     }
 
     /**
@@ -150,10 +148,8 @@ final class GisGeometryCollection extends GisGeometry
      * @param int[]  $color      color for the GIS GEOMETRYCOLLECTION object
      * @param array  $scale_data array containing data related to scaling
      * @param TCPDF  $pdf        TCPDF instance
-     *
-     * @return TCPDF the modified TCPDF instance
      */
-    public function prepareRowAsPdf(string $spatial, string $label, array $color, array $scale_data, TCPDF $pdf): TCPDF
+    public function prepareRowAsPdf(string $spatial, string $label, array $color, array $scale_data, TCPDF $pdf): void
     {
         // Trim to remove leading 'GEOMETRYCOLLECTION(' and trailing ')'
         $goem_col = mb_substr($spatial, 19, -1);
@@ -173,10 +169,8 @@ final class GisGeometryCollection extends GisGeometry
                 continue;
             }
 
-            $pdf = $gis_obj->prepareRowAsPdf($sub_part, $label, $color, $scale_data, $pdf);
+            $gis_obj->prepareRowAsPdf($sub_part, $label, $color, $scale_data, $pdf);
         }
-
-        return $pdf;
     }
 
     /**

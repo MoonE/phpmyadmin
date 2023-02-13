@@ -190,15 +190,15 @@ class GisPointTest extends GisGeomTestCase
     {
         $image = ImageWrapper::create(200, 124, ['red' => 229, 'green' => 229, 'blue' => 229]);
         $this->assertNotNull($image);
-        $return = $this->object->prepareRowAsPng(
+        $this->object->prepareRowAsPng(
             'POINT(12 35)',
             'image',
             [176, 46, 224],
             ['x' => -88, 'y' => -27, 'scale' => 1, 'height' => 124],
             $image
         );
-        $this->assertEquals(200, $return->width());
-        $this->assertEquals(124, $return->height());
+        $this->assertEquals(200, $image->width());
+        $this->assertEquals(124, $image->height());
 
         $fileExpected = $this->testDir . '/point-expected.png';
         $fileActual = $this->testDir . '/point-actual.png';
@@ -224,13 +224,13 @@ class GisPointTest extends GisGeomTestCase
         array $scale_data,
         TCPDF $pdf
     ): void {
-        $return = $this->object->prepareRowAsPdf($spatial, $label, $color, $scale_data, $pdf);
+        $this->object->prepareRowAsPdf($spatial, $label, $color, $scale_data, $pdf);
 
         $fileExpectedArch = $this->testDir . '/point-expected-' . $this->getArch() . '.pdf';
         $fileExpectedGeneric = $this->testDir . '/point-expected.pdf';
         $fileExpected = file_exists($fileExpectedArch) ? $fileExpectedArch : $fileExpectedGeneric;
         $fileActual = $this->testDir . '/point-actual.pdf';
-        $return->Output($fileActual, 'F');
+        $pdf->Output($fileActual, 'F');
         $this->assertFileEquals($fileExpected, $fileActual);
     }
 

@@ -174,15 +174,15 @@ class GisMultiPointTest extends GisGeomTestCase
     {
         $image = ImageWrapper::create(200, 124, ['red' => 229, 'green' => 229, 'blue' => 229]);
         $this->assertNotNull($image);
-        $return = $this->object->prepareRowAsPng(
+        $this->object->prepareRowAsPng(
             'MULTIPOINT(12 35,48 75,69 23,25 45,14 53,35 78)',
             'image',
             [176, 46, 224],
             ['x' => -18, 'y' => 14, 'scale' => 1.71, 'height' => 124],
             $image
         );
-        $this->assertEquals(200, $return->width());
-        $this->assertEquals(124, $return->height());
+        $this->assertEquals(200, $image->width());
+        $this->assertEquals(124, $image->height());
 
         $fileExpected = $this->testDir . '/multipoint-expected.png';
         $fileActual = $this->testDir . '/multipoint-actual.png';
@@ -208,13 +208,13 @@ class GisMultiPointTest extends GisGeomTestCase
         array $scale_data,
         TCPDF $pdf
     ): void {
-        $return = $this->object->prepareRowAsPdf($spatial, $label, $color, $scale_data, $pdf);
+        $this->object->prepareRowAsPdf($spatial, $label, $color, $scale_data, $pdf);
 
         $fileExpectedArch = $this->testDir . '/multipoint-expected-' . $this->getArch() . '.pdf';
         $fileExpectedGeneric = $this->testDir . '/multipoint-expected.pdf';
         $fileExpected = file_exists($fileExpectedArch) ? $fileExpectedArch : $fileExpectedGeneric;
         $fileActual = $this->testDir . '/multipoint-actual.pdf';
-        $return->Output($fileActual, 'F');
+        $pdf->Output($fileActual, 'F');
         $this->assertFileEquals($fileExpected, $fileActual);
     }
 

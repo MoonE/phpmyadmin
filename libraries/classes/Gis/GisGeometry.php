@@ -53,7 +53,7 @@ abstract class GisGeometry
         array $color,
         array $scale_data,
         ImageWrapper $image
-    ): ImageWrapper;
+    ): void;
 
     /**
      * Adds to the TCPDF instance, the data related to a row in the GIS dataset.
@@ -63,8 +63,6 @@ abstract class GisGeometry
      * @param int[]  $color      color for the GIS data object
      * @param array  $scale_data array containing data related to scaling
      * @param TCPDF  $pdf        TCPDF instance
-     *
-     * @return TCPDF the modified TCPDF instance
      */
     abstract public function prepareRowAsPdf(
         string $spatial,
@@ -72,7 +70,7 @@ abstract class GisGeometry
         array $color,
         array $scale_data,
         TCPDF $pdf
-    ): TCPDF;
+    ): void;
 
     /**
      * Prepares the JavaScript related to a row in the GIS dataset

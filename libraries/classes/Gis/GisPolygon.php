@@ -81,7 +81,7 @@ final class GisPolygon extends GisGeometry
         array $color,
         array $scale_data,
         ImageWrapper $image
-    ): ImageWrapper {
+    ): void {
         // allocate colors
         $black = $image->colorAllocate(0, 0, 0);
         $fill_color = $image->colorAllocate(...$color);
@@ -98,18 +98,18 @@ final class GisPolygon extends GisGeometry
 
         // draw polygon
         $image->filledPolygon($points_arr, $fill_color);
-        // print label if applicable
-        if ($label !== '') {
-            $image->string(
-                1,
-                (int) round($points_arr[2]),
-                (int) round($points_arr[3]),
-                $label,
-                $black
-            );
+        if ($label === '') {
+            return;
         }
 
-        return $image;
+        // print label
+        $image->string(
+            1,
+            (int) round($points_arr[2]),
+            (int) round($points_arr[3]),
+            $label,
+            $black
+        );
     }
 
     /**
@@ -120,10 +120,8 @@ final class GisPolygon extends GisGeometry
      * @param int[]  $color      Color for the GIS POLYGON object
      * @param array  $scale_data Array containing data related to scaling
      * @param TCPDF  $pdf        TCPDF instance
-     *
-     * @return TCPDF the modified TCPDF instance
      */
-    public function prepareRowAsPdf(string $spatial, string $label, array $color, array $scale_data, TCPDF $pdf): TCPDF
+    public function prepareRowAsPdf(string $spatial, string $label, array $color, array $scale_data, TCPDF $pdf): void
     {
         // Trim to remove leading 'POLYGON((' and trailing '))'
         $polygon = mb_substr($spatial, 9, -2);
@@ -139,14 +137,14 @@ final class GisPolygon extends GisGeometry
 
         // draw polygon
         $pdf->Polygon($points_arr, 'F*', [], $color, true);
-        // print label if applicable
-        if ($label !== '') {
-            $pdf->setXY($points_arr[2], $points_arr[3]);
-            $pdf->setFontSize(5);
-            $pdf->Cell(0, 0, $label);
+        if ($label === '') {
+            return;
         }
 
-        return $pdf;
+        // print label
+        $pdf->setXY($points_arr[2], $points_arr[3]);
+        $pdf->setFontSize(5);
+        $pdf->Cell(0, 0, $label);
     }
 
     /**
