@@ -7958,34 +7958,7 @@
     </PossiblyFalseOperand>
   </file>
   <file src="libraries/classes/Gis/GisGeometryCollection.php">
-    <DocblockTypeContradiction>
-      <code>! $gis_obj</code>
-      <code>$gis_obj</code>
-    </DocblockTypeContradiction>
     <MixedArgument>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
-      <code>$sub_part</code>
       <code>$type</code>
       <code>$wkt</code>
     </MixedArgument>
@@ -8606,10 +8579,6 @@
       <code>$this-&gt;userSpecifiedSettings === null</code>
     </DocblockTypeContradiction>
     <MixedArgument>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
-      <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$row[$this-&gt;settings['spatialColumn']]</code>
       <code>$this-&gt;settings['height']</code>
       <code>$this-&gt;settings['width']</code>

@@ -19,9 +19,9 @@ class GisFactory
      *
      * @param string $type type of the geometric object
      *
-     * @return GisGeometry|false the singleton instance of geometric class of the given type
+     * @return GisGeometry|null The singleton instance of geometric class of the given type
      */
-    public static function factory($type)
+    public static function factory(string $type): GisGeometry|null
     {
         switch (strtoupper($type)) {
             case 'MULTIPOLYGON':
@@ -46,7 +46,7 @@ class GisFactory
                 return GisGeometryCollection::singleton();
 
             default:
-                return false;
+                return null;
         }
     }
 }

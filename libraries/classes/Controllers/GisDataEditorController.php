@@ -86,7 +86,7 @@ class GisDataEditorController extends AbstractController
 
         // Generate parameters from value passed.
         $gisObj = GisFactory::factory($geomType);
-        if ($gisObj === false) {
+        if (! $gisObj) {
             return;
         }
 
