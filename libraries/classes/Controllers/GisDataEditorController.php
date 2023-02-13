@@ -114,17 +114,15 @@ class GisDataEditorController extends AbstractController
                 'srid' => $srid,
             ],
         ];
-        $visualization = GisVisualization::getByData($data, $visualizationSettings)
-            ->toImage('svg');
-
-        $openLayers = GisVisualization::getByData($data, $visualizationSettings)
-            ->asOl();
+        $visualization = GisVisualization::getByData($data, $visualizationSettings);
+        $svg = $visualization->asSVG();
+        $openLayers = $visualization->asOl();
 
         // If the call is to update the WKT and visualization make an AJAX response
         if ($request->hasBodyParam('generate')) {
             $this->response->addJSON([
                 'result' => $GLOBALS['result'],
-                'visualization' => $visualization,
+                'visualization' => $svg,
                 'openLayers' => $openLayers,
             ]);
 
@@ -146,7 +144,7 @@ class GisDataEditorController extends AbstractController
             'field' => $field,
             'input_name' => $inputName,
             'srid' => $srid,
-            'visualization' => $visualization,
+            'visualization' => $svg,
             'open_layers' => $openLayers,
             'gis_types' => $gisTypes,
             'geom_type' => $geomType,
