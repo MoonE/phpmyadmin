@@ -4356,9 +4356,6 @@
     <PossiblyUndefinedArrayOffset>
       <code>$spatialCandidates[0]</code>
     </PossiblyUndefinedArrayOffset>
-    <PropertyNotSetInConstructor>
-      <code>$visualization</code>
-    </PropertyNotSetInConstructor>
     <RedundantCast>
       <code>(int) $GLOBALS['cfg']['MaxRows']</code>
     </RedundantCast>
@@ -8643,6 +8640,9 @@
     <PossiblyNullPropertyAssignmentValue>
       <code>null</code>
     </PossiblyNullPropertyAssignmentValue>
+    <PossiblyUnusedMethod>
+      <code>toImage</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$modifiedSql</code>
     </PropertyNotSetInConstructor>

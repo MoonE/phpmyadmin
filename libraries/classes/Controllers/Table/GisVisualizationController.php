@@ -25,9 +25,6 @@ use function is_array;
  */
 final class GisVisualizationController extends AbstractController
 {
-    /** @var GisVisualization */
-    private $visualization;
-
     private DatabaseInterface $dbi;
 
     public function __construct(
@@ -126,10 +123,14 @@ final class GisVisualizationController extends AbstractController
             }
         }
 
-        $this->visualization = GisVisualization::get($sqlQuery, $visualizationSettings, $rows, $pos);
+        $visualization = GisVisualization::get($sqlQuery, $visualizationSettings, $rows, $pos);
 
         if (isset($_GET['saveToFile'])) {
-            $this->saveToFile($visualizationSettings['spatialColumn'], $_GET['fileFormat']);
+            $this->saveToFile(
+                $visualization,
+                $visualizationSettings['spatialColumn'],
+                $_GET['fileFormat']
+            );
 
             return;
         }
@@ -138,15 +139,15 @@ final class GisVisualizationController extends AbstractController
 
         // If all the rows contain SRID, use OpenStreetMaps on the initial loading.
         if (! isset($_POST['displayVisualization'])) {
-            if ($this->visualization->hasSrid()) {
+            if ($visualization->hasSrid()) {
                 $visualizationSettings['choice'] = 'useBaseLayer';
             } else {
                 unset($visualizationSettings['choice']);
             }
         }
 
-        $this->visualization->setUserSpecifiedSettings($visualizationSettings);
-        foreach ($this->visualization->getSettings() as $setting => $val) {
+        $visualization->setUserSpecifiedSettings($visualizationSettings);
+        foreach ($visualization->getSettings() as $setting => $val) {
             if (isset($visualizationSettings[$setting])) {
                 continue;
             }
@@ -181,20 +182,21 @@ final class GisVisualizationController extends AbstractController
             'spatial_candidates' => $spatialCandidates,
             'visualization_settings' => $visualizationSettings,
             'start_and_number_of_rows_fieldset' => $startAndNumberOfRowsFieldset,
-            'visualization' => $this->visualization->toImage('svg'),
-            'draw_ol' => $this->visualization->asOl(),
+            'visualization' => $visualization->asSVG(),
+            'draw_ol' => $visualization->asOl(),
         ]);
 
         $this->response->addHTML($html);
     }
 
     /**
-     * @param string $filename File name
-     * @param string $format   Save format
+     * @param GisVisualization $visualization Visualization
+     * @param string           $filename      File name
+     * @param string           $format        Save format
      */
-    private function saveToFile(string $filename, string $format): void
+    private function saveToFile(GisVisualization $visualization, string $filename, string $format): void
     {
         $this->response->disable();
-        $this->visualization->toFile($filename, $format);
+        $visualization->toFile($filename, $format);
     }
 }
