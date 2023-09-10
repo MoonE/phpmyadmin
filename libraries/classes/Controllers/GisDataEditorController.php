@@ -118,10 +118,7 @@ class GisDataEditorController extends AbstractController
         $geom_count = 1;
         if ($geom_type === 'GEOMETRYCOLLECTION') {
             $geom_count = isset($gis_data[$geom_type]['geom_count'])
-                ? intval($gis_data[$geom_type]['geom_count']) : 1;
-            if (isset($gis_data[$geom_type]['add_geom'])) {
-                $geom_count++;
-            }
+                ? intval($gis_data[$geom_type]['geom_count']) : 0;
         }
 
         $templateOutput = $this->template->render('gis_data_editor_form', [
