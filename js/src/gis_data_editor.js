@@ -213,7 +213,7 @@ AJAX.registerTeardown('gis_data_editor.js', function () {
     $(document).off('change', '#gis_editor select.gis_type');
     $(document).off('click', '#gis_editor a.close_gis_editor, #gis_editor a.cancel_gis_editor');
     $(document).off('click', '#gis_editor a.addJs.addPoint');
-    $(document).off('click', '#gis_editor a.addLine.addJs');
+    $(document).off('click', '#gis_editor a.addJs.addLine');
     $(document).off('click', '#gis_editor a.addJs.addPolygon');
     $(document).off('click', '#gis_editor a.addJs.addGeom');
 });
@@ -302,7 +302,7 @@ AJAX.registerOnload('gis_data_editor.js', function () {
     /**
      * Handles adding linestrings and inner rings
      */
-    $(document).on('click', '#gis_editor a.addLine.addJs', function () {
+    $(document).on('click', '#gis_editor a.addJs.addLine', function () {
         var $a = $(this);
         var name = $a.attr('name');
 
@@ -328,7 +328,7 @@ AJAX.registerOnload('gis_data_editor.js', function () {
         for (var i = 0; i < noOfPoints; i++) {
             html += addDataPoint(i, (prefix + '[' + noOfLines + ']'));
         }
-        html += '<a class="addPoint addJs" name="' + prefix + '[' + noOfLines + '][add_point]" href="#">+ ' +
+        html += '<a class="btn btn-secondary addPoint addJs" name="' + prefix + '[' + noOfLines + '][add_point]" href="#">+ ' +
             Messages.strAddPoint + '</a><br>';
 
         $a.before(html);
@@ -355,9 +355,9 @@ AJAX.registerOnload('gis_data_editor.js', function () {
         for (var i = 0; i < 4; i++) {
             html += addDataPoint(i, (prefix + '[' + noOfPolygons + '][0]'));
         }
-        html += '<a class="addPoint addJs" name="' + prefix + '[' + noOfPolygons + '][0][add_point]" href="#">+ ' +
+        html += '<a class="btn btn-secondary addPoint addJs" name="' + prefix + '[' + noOfPolygons + '][0][add_point]" href="#">+ ' +
             Messages.strAddPoint + '</a><br>' +
-            '<a class="addLine addJs" name="' + prefix + '[' + noOfPolygons + '][add_line]" href="#">+ ' +
+            '<a class="btn btn-secondary addLine addJs" name="' + prefix + '[' + noOfPolygons + '][add_line]" href="#">+ ' +
             Messages.strAddInnerRing + '</a><br><br>';
 
         $a.before(html);
