@@ -77,6 +77,7 @@
   "scripts": {
     "postinstall": "yarn run build",
     "build": "webpack",
+    "watch": "webpack --watch",
     "css-lint": "stylelint \"public/themes/**/scss/*.scss\" \"public/setup/scss/*.scss\"",
     "js-lint": "eslint js/src test/javascript jest.config.cjs",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
