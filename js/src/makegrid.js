@@ -287,17 +287,42 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
          * @param newn new zero-based column index
          */
         shiftCol: function (oldn, newn) {
-            $(g.t).find('tr').each(function () {
+            /**
+             * @param {number} index
+             * @return {function(HTMLTableRowElement): HTMLTableCellElement}
+             */
+            const makeFindNthCell = function (index) {
+                let i = 0;
+                /**
+                 * @param {HTMLElement} n
+                 * @return {boolean}
+                 */
+                const findCell = function (n) {
+                    if (n.nodeName !== 'TD' && n.nodeName !== 'TH') {
+                        return false;
+                    }
+                    i += Number(n.getAttribute('colspan')) || 1;
+                    return i > index;
+                };
+                /**
+                 * @param {HTMLTableRowElement} row
+                 * @return {HTMLTableCellElement}
+                 */
+                return function (row) {
+                    i = 0;
+                    return Array.prototype.find.call(row.children, findCell);
+                };
+            };
+            const findOldCell = makeFindNthCell(g.actionSpan + oldn);
+            const findNewCell = makeFindNthCell(g.actionSpan + newn);
+            const rows = $(g.t).find('tr');
+            rows.each(function () {
+                const oldCell = findOldCell(this);
+                const newCell = findNewCell(this);
                 if (newn < oldn) {
-                    $(this).find('th.draggable').eq(newn)
-                        .add($(this).find('td').eq(g.actionSpan + newn))
-                        .before($(this).find('th.draggable').eq(oldn)
-                            .add($(this).find('td').eq(g.actionSpan + oldn)));
+                    $(newCell).before(oldCell);
                 } else {
-                    $(this).find('th.draggable').eq(newn)
-                        .add($(this).find('td').eq(g.actionSpan + newn))
-                        .after($(this).find('th.draggable').eq(oldn)
-                            .add($(this).find('td').eq(g.actionSpan + oldn)));
+                    $(newCell).after(oldCell);
                 }
             });
             // reposition the column resize bars
