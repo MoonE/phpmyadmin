@@ -495,7 +495,7 @@ class GisPolygonTest extends GisGeomTestCase
         string $output
     ): void {
         $string = $this->object->prepareRowAsSvg($spatial, $label, $fillColor, $scaleData);
-        self::assertSame(1, preg_match($output, $string));
+        self::assertMatchesRegularExpressionCompat($output, $string);
     }
 
     /**
@@ -516,10 +516,10 @@ class GisPolygonTest extends GisGeomTestCase
                     'scale' => 2,
                     'height' => 150,
                 ],
-                '/^(<path d=" M 222, 288 L 22, 228 L 10, 162 Z " name="svg" '
-                . 'id="svg)(\d+)(" class="polygon vector" stroke="black" '
+                '/^<path d=" M 222, 288 L 22, 228 L 10, 162 Z " name="svg" '
+                . 'id="svg\d+" class="polygon vector" stroke="black" '
                 . 'stroke-width="0.5" fill="#B02EE0" fill-rule="evenodd" '
-                . 'fill-opacity="0.8"\/>)$/',
+                . 'fill-opacity="0.8"\/>$/',
             ],
         ];
     }

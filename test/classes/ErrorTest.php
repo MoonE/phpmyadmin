@@ -123,7 +123,7 @@ class ErrorTest extends AbstractTestCase
      */
     public function testGetHash(): void
     {
-        self::assertSame(1, preg_match('/^([a-z0-9]*)$/', $this->object->getHash()));
+        self::assertMatchesRegularExpressionCompat('/^([a-z0-9]*)$/', $this->object->getHash());
     }
 
     /**

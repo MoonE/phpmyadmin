@@ -412,7 +412,7 @@ class GisMultiPolygonTest extends GisGeomTestCase
         string $output
     ): void {
         $string = $this->object->prepareRowAsSvg($spatial, $label, $fillColor, $scaleData);
-        self::assertSame(1, preg_match($output, $string));
+        self::assertMatchesRegularExpressionCompat($output, $string);
     }
 
     /**
@@ -433,13 +433,13 @@ class GisMultiPolygonTest extends GisGeomTestCase
                     'scale' => 2,
                     'height' => 150,
                 ],
-                '/^(<path d=" M 248, 208 L 270, 122 L 8, 138 Z " name="svg" class="'
+                '/^<path d=" M 248, 208 L 270, 122 L 8, 138 Z " name="svg" class="'
                 . 'multipolygon vector" stroke="black" stroke-width="0.5" fill="'
-                . '#B02EE0" fill-rule="evenodd" fill-opacity="0.8" id="svg)(\d+)'
-                . '("\/><path d=" M 186, 288 L 88, 248 L 132, 142 Z " name="svg" '
+                . '#B02EE0" fill-rule="evenodd" fill-opacity="0.8" id="svg\d+'
+                . '"\/><path d=" M 186, 288 L 88, 248 L 132, 142 Z " name="svg" '
                 . 'class="multipolygon vector" stroke="black" stroke-width="0.5" '
-                . 'fill="#B02EE0" fill-rule="evenodd" fill-opacity="0.8" id="svg)'
-                . '(\d+)("\/>)$/',
+                . 'fill="#B02EE0" fill-rule="evenodd" fill-opacity="0.8" id="svg'
+                . '\d+"\/>$/',
             ],
         ];
     }
