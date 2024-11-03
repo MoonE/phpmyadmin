@@ -260,12 +260,8 @@ class GisPointTest extends GisGeomTestCase
         array $scaleData,
         string $output
     ): void {
-        self::assertSame($output, $this->object->prepareRowAsSvg(
-            $spatial,
-            $label,
-            $pointColor,
-            $scaleData
-        ));
+        $string = $this->object->prepareRowAsSvg($spatial, $label, $pointColor, $scaleData);
+        self::assertMatchesRegularExpressionCompat($output, $string);
     }
 
     /**
@@ -286,7 +282,8 @@ class GisPointTest extends GisGeomTestCase
                     'scale' => 2,
                     'height' => 150,
                 ],
-                '',
+                '/^<circle cx="0" cy="218" r="3" name="svg" id="svg\d+" class="point vector"'
+                . ' fill="white" stroke="#B02EE0" stroke-width="2"\/>$/',
             ],
         ];
     }
