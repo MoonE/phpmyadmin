@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Login</title>
+</head>
+<body>
+
+    <h2>Login Admin</h2>
+    <form action="#" method="post">
+        <label for="adminUsername">Username:</label><br>
+        <input type="text" id="adminUsername" name="adminUsername"><br><br>
+
+        <label for="adminPassword">Password:</label><br>
+        <input type="password" id="adminPassword" name="adminPassword"><br><br>
+
+        <input type="submit" value="Login Admin">
+    </form>
+
+    <hr>
+
+    <h2>Daftar Sebagai Anggota</h2>
+    <p>Belum punya akun? Daftar di sini:</p>
+    <a href="#">Halaman Pendaftaran</a>
+
+
+</body>
+</html>
