@@ -14,9 +14,9 @@
                   {{- t('Ascending') }}" src="themes/dot.gif" style="display: {{ column.sort_order == 'DESC' ? 'inline' : 'none' }}">
               {% endif %}
             </a>
-            {% if column.has_full_query %}
+            {% if column.params.order_by_field == 'INFO' %}
               <a href="{{ url('/server/status/processes') }}" data-post="{{ get_common(refresh_params, '', false) }}">
-                {% if column.is_full %}
+                {% if is_full %}
                   {{ get_image(
                     's_partialtext',
                     t('Truncate shown queries'),

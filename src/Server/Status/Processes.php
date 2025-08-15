@@ -11,7 +11,6 @@ use PhpMyAdmin\Util;
 use function __;
 use function array_change_key_case;
 use function array_key_exists;
-use function count;
 use function number_format;
 
 use const CASE_LOWER;
@@ -25,38 +24,34 @@ final class Processes
     /** @return array<string, array|string|bool> */
     public function getList(bool $showExecuting, bool $showFullSql, string $orderByField, string $sortOrder): array
     {
-        $urlParams = [];
+        $urlParams = [
+            'full' => $showFullSql ? '' : 1,
+        ];
 
-        $urlParams['full'] = $showFullSql ? '' : 1;
-
-        $sqlQuery = $showFullSql
-            ? 'SHOW FULL PROCESSLIST'
-            : 'SHOW PROCESSLIST';
+        $sqlQuery = $showFullSql ? 'SHOW FULL PROCESSLIST' : 'SHOW PROCESSLIST';
         $useIS = $showExecuting || ($orderByField !== '' && $sortOrder !== '');
         if ($useIS) {
             $urlParams['order_by_field'] = $orderByField;
             $urlParams['sort_order'] = $sortOrder;
             $urlParams['showExecuting'] = $showExecuting;
-            $sqlQuery = 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ';
-        }
+            $sqlQuery = 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST`';
+            if ($showExecuting) {
+                $sqlQuery .= " WHERE `STATE` <> ''";
+            }
 
-        if ($showExecuting) {
-            $sqlQuery .= ' WHERE state != "" ';
-        }
-
-        if ($orderByField !== '' && $sortOrder !== '') {
-            $sqlQuery .= ' ORDER BY ' . Util::backquote($orderByField) . ' ' . $sortOrder;
+            if ($orderByField !== '' && $sortOrder !== '') {
+                $sqlQuery .= ' ORDER BY ' . Util::backquote($orderByField) . ' ' . $sortOrder;
+            }
         }
 
         $result = $this->dbi->query($sqlQuery);
         $rows = [];
         while ($process = $result->fetchAssoc()) {
-            // Array keys need to modify due to the way it has used
-            // to display column values
+            // Array keys need to modify due to the way it has used to display column values
             $process = array_change_key_case($process, CASE_LOWER);
 
-            $progress = ! empty($process['progress']) ? $process['progress'] : '---';
-            if ($useIS && ! empty($process['progress'])) {
+            $progress = $process['progress'] ?? '---';
+            if ($useIS && isset($process['progress'])) {
                 $stage = array_key_exists('stage', $process) ? (int) $process['stage'] : null;
                 $maxStage = array_key_exists('max_stage', $process) ? (int) $process['max_stage'] : null;
                 if ($stage !== null && $maxStage !== null && $maxStage > 1) {
@@ -77,10 +72,11 @@ final class Processes
             ];
         }
 
-        $columns = $this->getSortableColumnsForProcessList($showExecuting, $showFullSql, $orderByField, $sortOrder);
+        $columns = $this->getSortableColumnsForProcessList($orderByField, $sortOrder);
 
         return [
             'columns' => $columns,
+            'is_full' => $showFullSql,
             'rows' => $rows,
             'refresh_params' => $urlParams,
             'is_mariadb' => $this->dbi->isMariaDB(),
@@ -89,62 +85,37 @@ final class Processes
 
     /** @return mixed[] */
     private function getSortableColumnsForProcessList(
-        bool $showExecuting,
-        bool $showFullSql,
         string $orderByField,
         string $sortOrder,
     ): array {
         // This array contains display name and real column name of each
         // sortable column in the table
         $sortableColumns = [
-            ['column_name' => __('ID'), 'order_by_field' => 'Id'],
-            ['column_name' => __('User'), 'order_by_field' => 'User'],
-            ['column_name' => __('Host'), 'order_by_field' => 'Host'],
-            ['column_name' => __('Database'), 'order_by_field' => 'Db'],
-            ['column_name' => __('Command'), 'order_by_field' => 'Command'],
-            ['column_name' => __('Time'), 'order_by_field' => 'Time'],
-            ['column_name' => __('Status'), 'order_by_field' => 'State'],
+            ['column_name' => __('ID'), 'order_by_field' => 'ID'],
+            ['column_name' => __('User'), 'order_by_field' => 'USER'],
+            ['column_name' => __('Host'), 'order_by_field' => 'HOST'],
+            ['column_name' => __('Database'), 'order_by_field' => 'DB'],
+            ['column_name' => __('Command'), 'order_by_field' => 'COMMAND'],
+            ['column_name' => __('Time'), 'order_by_field' => 'TIME'],
+            ['column_name' => __('Status'), 'order_by_field' => 'STATE'],
         ];
-
         if ($this->dbi->isMariaDB()) {
-            $sortableColumns[] = ['column_name' => __('Progress'), 'order_by_field' => 'Progress'];
+            $sortableColumns[] = ['column_name' => __('Progress'), 'order_by_field' => 'PROGRESS'];
         }
 
-        $sortableColumns[] = ['column_name' => __('SQL query'), 'order_by_field' => 'Info'];
-
-        $sortableColCount = count($sortableColumns);
+        $sortableColumns[] = ['column_name' => __('SQL query'), 'order_by_field' => 'INFO'];
 
         $columns = [];
-        foreach ($sortableColumns as $columnKey => $column) {
-            $isSorted = $orderByField !== ''
-                && $sortOrder !== ''
-                && $orderByField === $column['order_by_field'];
+        foreach ($sortableColumns as $column) {
+            $isSorted = $sortOrder !== '' && $orderByField === $column['order_by_field'];
+            $column['sort_order'] = $isSorted && $sortOrder === 'ASC' ? 'DESC' : 'ASC';
 
-            $column['sort_order'] = 'ASC';
-            if ($isSorted && $sortOrder === 'ASC') {
-                $column['sort_order'] = 'DESC';
-            }
-
-            if ($showExecuting) {
-                $column['showExecuting'] = 'on';
-            }
-
-            $columns[$columnKey] = [
+            $columns[] = [
                 'name' => $column['column_name'],
                 'params' => $column,
                 'is_sorted' => $isSorted,
                 'sort_order' => $column['sort_order'],
-                'has_full_query' => false,
-                'is_full' => false,
             ];
-
-            if (0 !== --$sortableColCount) {
-                continue;
-            }
-
-            $columns[$columnKey]['has_full_query'] = true;
-
-            $columns[$columnKey]['is_full'] = $showFullSql;
         }
 
         return $columns;

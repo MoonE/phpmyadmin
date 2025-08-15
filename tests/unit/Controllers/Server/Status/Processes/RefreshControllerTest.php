@@ -45,14 +45,14 @@ class RefreshControllerTest extends AbstractTestCase
     public function testRefresh(): void
     {
         $process = [
-            'User' => 'User1',
-            'Host' => 'Host1',
-            'Id' => 'Id1',
-            'Db' => 'db1',
-            'Command' => 'Command1',
-            'Info' => 'Info1',
-            'State' => 'State1',
-            'Time' => 'Time1',
+            'user' => 'User1',
+            'host' => 'Host1',
+            'id' => 9,
+            'db' => 'db1',
+            'command' => 'Command1',
+            'info' => 'Info1',
+            'state' => 2,
+            'time' => 1,
         ];
         Config::getInstance()->settings['MaxCharactersInDisplayedSQL'] = 12;
 
@@ -69,52 +69,25 @@ class RefreshControllerTest extends AbstractTestCase
             ->withParsedBody([
                 'ajax_request' => 'true',
                 'column_name' => '',
-                'order_by_field' => 'process',
+                'order_by_field' => 'PROCESS',
                 'sort_order' => 'DESC',
-                'full' => 'true',
+                'full' => '1',
             ]);
 
         $controller($request);
         $html = $response->getHTMLResult();
 
         self::assertStringContainsString('index.php?route=/server/status/processes', $html);
-        $killProcess = 'data-post="'
-            . Url::getCommon(['kill' => $process['Id']], '') . '"';
+        $killProcess = 'data-post="' . Url::getCommon(['kill' => $process['id']], '') . '"';
         self::assertStringContainsString($killProcess, $html);
         self::assertStringContainsString('ajax kill_process', $html);
-        self::assertStringContainsString(
-            __('Kill'),
-            $html,
-        );
-
-        //validate 2: $process['User']
-        self::assertStringContainsString(
-            htmlspecialchars($process['User']),
-            $html,
-        );
-
-        //validate 3: $process['Host']
-        self::assertStringContainsString(
-            htmlspecialchars($process['Host']),
-            $html,
-        );
-
-        //validate 4: $process['db']
-        self::assertStringContainsString($process['Db'], $html);
-
-        //validate 5: $process['Command']
-        self::assertStringContainsString(
-            htmlspecialchars($process['Command']),
-            $html,
-        );
-
-        //validate 6: $process['Time']
-        self::assertStringContainsString($process['Time'], $html);
-
-        //validate 7: $process['state']
-        self::assertStringContainsString($process['State'], $html);
-
-        //validate 8: $process['info']
-        self::assertStringContainsString($process['Info'], $html);
+        self::assertStringContainsString(__('Kill'), $html);
+        self::assertStringContainsString(htmlspecialchars($process['user']), $html);
+        self::assertStringContainsString(htmlspecialchars($process['host']), $html);
+        self::assertStringContainsString($process['db'], $html);
+        self::assertStringContainsString(htmlspecialchars($process['command']), $html);
+        self::assertStringContainsString((string) $process['time'], $html);
+        self::assertStringContainsString((string) $process['state'], $html);
+        self::assertStringContainsString($process['info'], $html);
     }
 }

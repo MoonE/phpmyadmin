@@ -90,7 +90,7 @@ class ProcessesControllerTest extends AbstractTestCase
             ->withParsedBody([
                 'column_name' => 'Database',
                 'full' => '1',
-                'order_by_field' => 'Db',
+                'order_by_field' => 'DB',
                 'sort_order' => 'ASC',
             ]);
 
@@ -107,7 +107,7 @@ class ProcessesControllerTest extends AbstractTestCase
             ->withParsedBody([
                 'column_name' => 'Host',
                 'full' => '1',
-                'order_by_field' => 'Host',
+                'order_by_field' => 'HOST',
                 'sort_order' => 'DESC',
             ]);
 

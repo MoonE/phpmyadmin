@@ -26,7 +26,6 @@ use function array_map;
 use function array_shift;
 use function is_array;
 use function preg_replace;
-use function str_replace;
 use function trim;
 
 use const MYSQLI_TYPE_BLOB;
@@ -173,7 +172,7 @@ class DbiDummy implements DbiExtension
      */
     public function realQuery(string $query, Connection $connection, bool $unbuffered = false): DummyResult|false
     {
-        $query = trim((string) preg_replace('/  */', ' ', str_replace("\n", ' ', $query)));
+        $query = trim(preg_replace('/[ \n]+/', ' ', $query));
         $found = $this->findFifoQuery($query) ?? $this->findDummyQuery($query);
         if ($found === null) {
             Assert::fail('Not supported query: ' . $query);
@@ -1488,22 +1487,22 @@ class DbiDummy implements DbiExtension
             [
                 'query' => 'SHOW PROCESSLIST',
                 'columns' => ['Id', 'User', 'Host', 'db', 'Command', 'Time', 'State', 'Info'],
-                'result' => [['Id1', 'User1', 'Host1', 'db1', 'Command1', 'Time1', 'State1', 'Info1']],
+                'result' => [[9, 'User1', 'Host1', 'db1', 'Command1', 1, 2, 'Info1']],
             ],
             [
-                'query' => 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ORDER BY `Db` ASC',
-                'columns' => ['Id', 'User', 'Host', 'db', 'Command', 'Time', 'State', 'Info'],
-                'result' => [['Id1', 'User1', 'Host1', 'db1', 'Command1', 'Time1', 'State1', 'Info1']],
+                'query' => 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ORDER BY `DB` ASC',
+                'columns' => ['ID', 'USER', 'HOST', 'DB', 'COMMAND', 'TIME', 'STATE', 'INFO'],
+                'result' => [[9, 'User1', 'Host1', 'db1', 'Command1', 1, 2, 'Info1']],
             ],
             [
-                'query' => 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ORDER BY `Host` DESC',
-                'columns' => ['Id', 'User', 'Host', 'db', 'Command', 'Time', 'State', 'Info'],
-                'result' => [['Id1', 'User1', 'Host1', 'db1', 'Command1', 'Time1', 'State1', 'Info1']],
+                'query' => 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ORDER BY `HOST` DESC',
+                'columns' => ['ID', 'USER', 'HOST', 'DB', 'COMMAND', 'TIME', 'STATE', 'INFO'],
+                'result' => [[9, 'User1', 'Host1', 'db1', 'Command1', 1, 2, 'Info1']],
             ],
             [
-                'query' => 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ORDER BY `process` DESC',
-                'columns' => ['Id', 'User', 'Host', 'db', 'Command', 'Time', 'State', 'Info'],
-                'result' => [['Id1', 'User1', 'Host1', 'db1', 'Command1', 'Time1', 'State1', 'Info1']],
+                'query' => 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` ORDER BY `PROCESS` DESC',
+                'columns' => ['ID', 'USER', 'HOST', 'DB', 'COMMAND', 'TIME', 'STATE', 'INFO'],
+                'result' => [[9, 'User1', 'Host1', 'db1', 'Command1', 1, 2, 'Info1']],
             ],
             ['query' => 'SELECT UNIX_TIMESTAMP() - 36000', 'result' => []],
             [
