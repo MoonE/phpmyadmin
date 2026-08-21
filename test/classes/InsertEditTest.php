@@ -2301,7 +2301,7 @@ class InsertEditTest extends AbstractTestCase
         );
         self::assertTrue(password_verify("a'c", mb_substr($result, 1, -1)));
 
-        // case 7 / 8 / 9 / 10
+        // case 7 - 12
         $gisParams = [
             ['ST_GeomFromText'],
             [],
@@ -2330,6 +2330,18 @@ class InsertEditTest extends AbstractTestCase
         $gisParams[3] = 'POINT(3 4)';
         $result = $this->insertEdit->getCurrentValueAsAnArrayForMultipleEdit(...$gisParams);
         self::assertSame('ST_GeomFromText(\'POINT(3 4)\')', $result);
+
+        // case 11
+        $GLOBALS['dbi']->setVersion(['@@version' => '8.0.1', '@@version_comment' => '']);
+
+        $gisParams[3] = 'POINT(3 4)';
+        $result = $this->insertEdit->getCurrentValueAsAnArrayForMultipleEdit(...$gisParams);
+        self::assertSame("ST_GeomFromText('POINT(3 4)')", $result);
+
+        // case 12
+        $gisParams[3] = 'POINT(3 4), 4326';
+        $result = $this->insertEdit->getCurrentValueAsAnArrayForMultipleEdit(...$gisParams);
+        self::assertSame("ST_GeomFromText('POINT(3 4)',4326,'axis-order=long-lat')", $result);
     }
 
     /**

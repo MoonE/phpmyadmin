@@ -11,6 +11,7 @@ use PhpMyAdmin\ConfigStorage\Relation;
 use PhpMyAdmin\Dbal\ResultInterface;
 use PhpMyAdmin\Html\Generator;
 use PhpMyAdmin\Plugins\TransformationsPlugin;
+use PhpMyAdmin\Query\Compatibility;
 use PhpMyAdmin\Utils\Gis;
 
 use function __;
@@ -1607,9 +1608,16 @@ class InsertEdit
             in_array($multiEditFuncs[$key], $gisFromTextFunctions)
             || in_array($multiEditFuncs[$key], $gisFromWkbFunctions)
         ) {
-            preg_match('/^(\'?)(.*?)\1(?:,(\d+))?$/', $currentValue, $matches);
-            $escapedParams = "'" . $this->dbi->escapeString($matches[2])
-                . (isset($matches[3]) ? "'," . $matches[3] : "'");
+            $supportsAxisOrder = Compatibility::supportsGeometryAxisOrientation($this->dbi);
+            preg_match('/^(\'?)(.*?)\1(?:, ?(\d+))?$/', $currentValue, $matches);
+            $escapedParams = "'" . $this->dbi->escapeString($matches[2]) . "'";
+
+            if (isset($matches[3])) {
+                $escapedParams .= ',' . $matches[3];
+                if ($supportsAxisOrder) {
+                    $escapedParams .= ",'axis-order=long-lat'";
+                }
+            }
 
             return $multiEditFuncs[$key] . '(' . $escapedParams . ')';
         }

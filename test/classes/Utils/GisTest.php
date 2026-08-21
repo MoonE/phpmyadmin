@@ -40,9 +40,7 @@ class GisTest extends AbstractTestCase
 
         $dbi = $this->createMock(DatabaseInterface::class);
 
-        $dbi->expects($SRIDOption ? $this->exactly(2) : $this->exactly(4))
-            ->method('getVersion')
-            ->willReturn($mysqlVersion);
+        $dbi->method('getVersion')->willReturn($mysqlVersion);
 
         $dbi->expects($SRIDOption ? $this->once() : $this->exactly(2))
             ->method('tryQuery')

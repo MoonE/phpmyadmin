@@ -297,6 +297,11 @@ class Compatibility
             $dbi->isMariaDB() && $dbi->getVersion() >= 100104;
     }
 
+    public static function supportsGeometryAxisOrientation(DatabaseInterface $dbi): bool
+    {
+        return ! $dbi->isMariaDB() && $dbi->getVersion() >= 80001;
+    }
+
     /**
      * Returns whether the database server supports compressed columns
      */

@@ -37,7 +37,7 @@ final class Gis
             $spatialSrid = 'ST_SRID';
         }
 
-        if ($dbi->getVersion() >= 80001 && ! $dbi->isMariaDb()) {
+        if (Compatibility::supportsGeometryAxisOrientation($dbi)) {
             $axisOrder = ', \'axis-order=long-lat\'';
         }
 

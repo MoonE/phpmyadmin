@@ -203,7 +203,7 @@ class GisVisualization
         }
 
         // If MYSQL version >= 8.0.1 override default axis order
-        if ($dbi->getVersion() >= 80001 && ! $dbi->isMariaDB()) {
+        if (Compatibility::supportsGeometryAxisOrientation($dbi)) {
             $axisOrder = ', \'axis-order=long-lat\'';
         }
 
