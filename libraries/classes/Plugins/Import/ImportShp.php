@@ -17,6 +17,7 @@ use PhpMyAdmin\Import;
 use PhpMyAdmin\Message;
 use PhpMyAdmin\Plugins\ImportPlugin;
 use PhpMyAdmin\Properties\Plugins\ImportPluginProperties;
+use PhpMyAdmin\Query\Compatibility;
 use PhpMyAdmin\Sanitize;
 use PhpMyAdmin\ZipExtension;
 use ZipArchive;
@@ -208,6 +209,10 @@ class ImportShp extends ImportPlugin
         // If .dbf file is loaded, the number of extra data columns
         $num_data_cols = $shp->getDBFHeader() !== null ? count($shp->getDBFHeader()) : 0;
 
+        $fn = Compatibility::supportsGeometryFunctionsWithStPrefix($dbi)
+            ? 'ST_GeomFromText'
+            : 'GeomFromText';
+
         $rows = [];
         $col_names = [];
         if ($num_rows != 0) {
@@ -216,8 +221,7 @@ class ImportShp extends ImportPlugin
                 if ($gis_obj == null || ! method_exists($gis_obj, 'getShape')) {
                     $tempRow[] = null;
                 } else {
-                    $tempRow[] = "GeomFromText('"
-                        . $gis_obj->getShape($record->shpData) . "')";
+                    $tempRow[] = $fn . "('" . $gis_obj->getShape($record->shpData) . "')";
                 }
 
                 if ($shp->getDBFHeader() !== null) {
