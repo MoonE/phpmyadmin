@@ -51,8 +51,7 @@ use function str_contains;
 use function str_replace;
 use function str_starts_with;
 use function strlen;
-use function strtoupper;
-use function substr;
+use function strncasecmp;
 use function trim;
 
 use const ENT_COMPAT;
@@ -286,8 +285,8 @@ class Generator
             // It needs to match the function listed in the select html element.
             if (
                 $currentClass === 'SPATIAL' &&
-                $dbi->getVersion() >= 50600 &&
-                strtoupper(substr($defaultFunction, 0, 3)) !== 'ST_'
+                strncasecmp($defaultFunction, 'ST_', 3) !== 0 &&
+                Compatibility::supportsGeometryFunctionsWithStPrefix($dbi)
             ) {
                 $defaultFunction = 'ST_' . $defaultFunction;
             }

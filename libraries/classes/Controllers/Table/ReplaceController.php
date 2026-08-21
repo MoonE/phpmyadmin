@@ -15,6 +15,7 @@ use PhpMyAdmin\Html\Generator;
 use PhpMyAdmin\InsertEdit;
 use PhpMyAdmin\Message;
 use PhpMyAdmin\Plugins\IOTransformationsPlugin;
+use PhpMyAdmin\Query\Compatibility;
 use PhpMyAdmin\ResponseRenderer;
 use PhpMyAdmin\Table;
 use PhpMyAdmin\Template;
@@ -189,7 +190,7 @@ final class ReplaceController extends AbstractController
             'PolyFromWKB',
             'MPolyFromWKB',
         ];
-        if ($this->dbi->getVersion() >= 50600) {
+        if (Compatibility::supportsGeometryFunctionsWithStPrefix($this->dbi)) {
             $gis_from_text_functions = [
                 'ST_GeomFromText',
                 'ST_GeomCollFromText',

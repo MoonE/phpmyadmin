@@ -10,6 +10,7 @@ use PhpMyAdmin\Tests\Stubs\DummyResult;
 use PhpMyAdmin\Utils\Gis;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use ReflectionMethod;
 
 use function hex2bin;
 
@@ -39,7 +40,7 @@ class GisTest extends AbstractTestCase
 
         $dbi = $this->createMock(DatabaseInterface::class);
 
-        $dbi->expects($SRIDOption ? $this->once() : $this->exactly(2))
+        $dbi->expects($SRIDOption ? $this->exactly(2) : $this->exactly(4))
             ->method('getVersion')
             ->willReturn($mysqlVersion);
 
@@ -90,7 +91,7 @@ class GisTest extends AbstractTestCase
                 ['POINT(1 1)'],
                 'POINT(1 1)',
                 false,
-                50700,
+                50706,
             ],
             [
                 'SELECT ST_ASTEXT(x\'000000000101000000000000000000f03f000000000000f03f\'),'
@@ -98,7 +99,7 @@ class GisTest extends AbstractTestCase
                 ['POINT(1 1)', '0'],
                 '\'POINT(1 1)\',0',
                 true,
-                50700,
+                50706,
             ],
             [
                 'SELECT ST_ASTEXT(x\'000000000101000000000000000000f03f000000000000f03f\', \'axis-order=long-lat\'),'
@@ -114,7 +115,7 @@ class GisTest extends AbstractTestCase
                 ['POINT(1 1)', '0'],
                 '\'POINT(1 1)\',0',
                 true,
-                50700,
+                50706,
             ],
             [
                 'SELECT ST_ASTEXT(x\'000000000101000000000000000000f03f000000000000f03f\', \'axis-order=long-lat\')',
@@ -128,21 +129,31 @@ class GisTest extends AbstractTestCase
                 ['POINT(1 1)', '0'],
                 'POINT(1 1)',
                 false,
-                50700,
+                50706,
             ],
         ];
     }
 
     public function testCreateDataOldMysql(): void
     {
-        self::assertSame('abc', Gis::createData('abc', 50500));
-        self::assertSame('GeomFromText(\'POINT()\',10)', Gis::createData('\'POINT()\',10', 50500));
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(50705);
+
+        $method = new ReflectionMethod(Gis::class, 'createData');
+
+        self::assertSame('abc', $method->invoke(null, 'abc', $dbi));
+        self::assertSame('GeomFromText(\'POINT()\',10)', $method->invoke(null, '\'POINT()\',10', $dbi));
     }
 
     public function testCreateDataNewMysql(): void
     {
-        self::assertSame('abc', Gis::createData('abc', 50600));
-        self::assertSame('ST_GeomFromText(\'POINT()\',10)', Gis::createData('\'POINT()\',10', 50600));
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(50706);
+
+        $method = new ReflectionMethod(Gis::class, 'createData');
+
+        self::assertSame('abc', $method->invoke(null, 'abc', $dbi));
+        self::assertSame('ST_GeomFromText(\'POINT()\',10)', $method->invoke(null, '\'POINT()\',10', $dbi));
     }
 
     public function testGetFunctions(): void

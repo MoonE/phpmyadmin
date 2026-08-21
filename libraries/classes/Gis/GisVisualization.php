@@ -9,6 +9,7 @@ namespace PhpMyAdmin\Gis;
 
 use PhpMyAdmin\Core;
 use PhpMyAdmin\Image\ImageWrapper;
+use PhpMyAdmin\Query\Compatibility;
 use PhpMyAdmin\Sanitize;
 use PhpMyAdmin\Util;
 use TCPDF;
@@ -189,19 +190,20 @@ class GisVisualization
      */
     private function modifySqlQuery($sql_query, $rows, $pos)
     {
-        $isMariaDb = $this->userSpecifiedSettings['isMariaDB'] === true;
+        global $dbi;
+
         $modified_query = 'SELECT ';
         $spatialAsText = 'ASTEXT';
         $spatialSrid = 'SRID';
         $axisOrder = '';
 
-        if ($this->userSpecifiedSettings['mysqlVersion'] >= 50600) {
+        if (Compatibility::supportsGeometryFunctionsWithStPrefix($dbi)) {
             $spatialAsText = 'ST_ASTEXT';
             $spatialSrid = 'ST_SRID';
         }
 
         // If MYSQL version >= 8.0.1 override default axis order
-        if ($this->userSpecifiedSettings['mysqlVersion'] >= 80001 && ! $isMariaDb) {
+        if ($dbi->getVersion() >= 80001 && ! $dbi->isMariaDB()) {
             $axisOrder = ', \'axis-order=long-lat\'';
         }
 

@@ -541,6 +541,7 @@ class Types
     {
         $isMariaDB = $this->dbi->isMariaDB();
         $serverVersion = $this->dbi->getVersion();
+        $supportsStPrefix = Compatibility::supportsGeometryFunctionsWithStPrefix($this->dbi);
 
         switch ($class) {
             case 'CHAR':
@@ -675,7 +676,7 @@ class Types
                 return array_values($ret);
 
             case 'SPATIAL':
-                if ($serverVersion >= 50600) {
+                if ($supportsStPrefix) {
                     return [
                         'ST_GeomFromText',
                         'ST_GeomFromWKB',

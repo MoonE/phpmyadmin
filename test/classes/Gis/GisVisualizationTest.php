@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpMyAdmin\Tests\Gis;
 
+use PhpMyAdmin\DatabaseInterface;
 use PhpMyAdmin\Gis\GisVisualization;
 use PhpMyAdmin\Tests\AbstractTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -19,11 +20,13 @@ class GisVisualizationTest extends AbstractTestCase
      */
     public function testScaleDataSet(): void
     {
-        $gis = GisVisualization::getByData([], [
-            'mysqlVersion' => 50500,
-            'spatialColumn' => 'abc',
-            'isMariaDB' => false,
-        ]);
+        global $dbi;
+
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(50500);
+        $dbi->method('isMariaDB')->willReturn(false);
+
+        $gis = GisVisualization::getByData([], ['spatialColumn' => 'abc']);
         $this->callFunction(
             $gis,
             GisVisualization::class,
@@ -106,12 +109,14 @@ class GisVisualizationTest extends AbstractTestCase
      */
     public function testModifyQueryOld(): void
     {
+        global $dbi;
+
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(50500);
+        $dbi->method('isMariaDB')->willReturn(false);
+
         $queryString = $this->callFunction(
-            GisVisualization::getByData([], [
-                'mysqlVersion' => 50500,
-                'spatialColumn' => 'abc',
-                'isMariaDB' => false,
-            ]),
+            GisVisualization::getByData([], ['spatialColumn' => 'abc']),
             GisVisualization::class,
             'modifySqlQuery',
             [
@@ -129,12 +134,14 @@ class GisVisualizationTest extends AbstractTestCase
      */
     public function testModifyQuery(): void
     {
+        global $dbi;
+
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(80000);
+        $dbi->method('isMariaDB')->willReturn(false);
+
         $queryString = $this->callFunction(
-            GisVisualization::getByData([], [
-                'mysqlVersion' => 80000,
-                'spatialColumn' => 'abc',
-                'isMariaDB' => false,
-            ]),
+            GisVisualization::getByData([], ['spatialColumn' => 'abc']),
             GisVisualization::class,
             'modifySqlQuery',
             [
@@ -155,12 +162,14 @@ class GisVisualizationTest extends AbstractTestCase
      */
     public function testModifyQueryTrimSqlEnd(): void
     {
+        global $dbi;
+
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(80000);
+        $dbi->method('isMariaDB')->willReturn(false);
+
         $queryString = $this->callFunction(
-            GisVisualization::getByData([], [
-                'mysqlVersion' => 80000,
-                'spatialColumn' => 'abc',
-                'isMariaDB' => false,
-            ]),
+            GisVisualization::getByData([], ['spatialColumn' => 'abc']),
             GisVisualization::class,
             'modifySqlQuery',
             [
@@ -181,12 +190,16 @@ class GisVisualizationTest extends AbstractTestCase
      */
     public function testModifyQueryLabelColumn(): void
     {
+        global $dbi;
+
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(80000);
+        $dbi->method('isMariaDB')->willReturn(false);
+
         $queryString = $this->callFunction(
             GisVisualization::getByData([], [
-                'mysqlVersion' => 80000,
                 'spatialColumn' => 'country_geom',
                 'labelColumn' => 'country name',
-                'isMariaDB' => false,
             ]),
             GisVisualization::class,
             'modifySqlQuery',
@@ -209,12 +222,14 @@ class GisVisualizationTest extends AbstractTestCase
      */
     public function testModifyQueryWithLimit(): void
     {
+        global $dbi;
+
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(80000);
+        $dbi->method('isMariaDB')->willReturn(false);
+
         $queryString = $this->callFunction(
-            GisVisualization::getByData([], [
-                'mysqlVersion' => 80000,
-                'spatialColumn' => 'abc',
-                'isMariaDB' => false,
-            ]),
+            GisVisualization::getByData([], ['spatialColumn' => 'abc']),
             GisVisualization::class,
             'modifySqlQuery',
             [
@@ -230,11 +245,7 @@ class GisVisualizationTest extends AbstractTestCase
         );
 
         $queryString = $this->callFunction(
-            GisVisualization::getByData([], [
-                'mysqlVersion' => 80000,
-                'spatialColumn' => 'abc',
-                'isMariaDB' => false,
-            ]),
+            GisVisualization::getByData([], ['spatialColumn' => 'abc']),
             GisVisualization::class,
             'modifySqlQuery',
             [
@@ -255,12 +266,14 @@ class GisVisualizationTest extends AbstractTestCase
      */
     public function testModifyQueryVersion8(): void
     {
+        global $dbi;
+
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(80001);
+        $dbi->method('isMariaDB')->willReturn(false);
+
         $queryString = $this->callFunction(
-            GisVisualization::getByData([], [
-                'mysqlVersion' => 80001,
-                'spatialColumn' => 'abc',
-                'isMariaDB' => false,
-            ]),
+            GisVisualization::getByData([], ['spatialColumn' => 'abc']),
             GisVisualization::class,
             'modifySqlQuery',
             [
@@ -281,12 +294,14 @@ class GisVisualizationTest extends AbstractTestCase
      */
     public function testModifyQueryMariaDB(): void
     {
+        global $dbi;
+
+        $dbi = $this->createMock(DatabaseInterface::class);
+        $dbi->method('getVersion')->willReturn(100400);
+        $dbi->method('isMariaDB')->willReturn(true);
+
         $queryString = $this->callFunction(
-            GisVisualization::getByData([], [
-                'mysqlVersion' => 100400,
-                'spatialColumn' => 'abc',
-                'isMariaDB' => true,
-            ]),
+            GisVisualization::getByData([], ['spatialColumn' => 'abc']),
             GisVisualization::class,
             'modifySqlQuery',
             [

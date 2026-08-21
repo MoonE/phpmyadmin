@@ -291,6 +291,12 @@ class Compatibility
         return false;
     }
 
+    public static function supportsGeometryFunctionsWithStPrefix(DatabaseInterface $dbi): bool
+    {
+        return ! $dbi->isMariaDB() && $dbi->getVersion() >= 50706 ||
+            $dbi->isMariaDB() && $dbi->getVersion() >= 100104;
+    }
+
     /**
      * Returns whether the database server supports compressed columns
      */

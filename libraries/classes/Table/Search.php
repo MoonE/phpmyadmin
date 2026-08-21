@@ -289,7 +289,7 @@ final class Search
 
         if ($geom_funcs[$geom_func]['params'] > 1) {
             // create gis data from the criteria input
-            $gis_data = Gis::createData($criteriaValues, $this->dbi->getVersion());
+            $gis_data = Gis::createData($criteriaValues, $this->dbi);
 
             return $geom_func . '(' . Util::backquote($names)
                 . ', ' . $gis_data . ')';
@@ -305,7 +305,7 @@ final class Search
             $where = $geom_function_applied;
         } elseif (in_array($type, Gis::getDataTypes()) && ! empty($criteriaValues)) {
             // create gis data from the criteria input
-            $gis_data = Gis::createData($criteriaValues, $this->dbi->getVersion());
+            $gis_data = Gis::createData($criteriaValues, $this->dbi);
             $where = $geom_function_applied . ' ' . $func_type . ' ' . $gis_data;
         } elseif (strlen($criteriaValues) > 0) {
             $where = $geom_function_applied . ' '

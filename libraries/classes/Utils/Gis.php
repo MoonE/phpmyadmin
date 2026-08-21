@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace PhpMyAdmin\Utils;
 
+use PhpMyAdmin\DatabaseInterface;
+use PhpMyAdmin\Query\Compatibility;
+
 use function array_map;
 use function bin2hex;
 use function mb_strtolower;
@@ -29,13 +32,12 @@ final class Gis
         $spatialAsText = 'ASTEXT';
         $spatialSrid = 'SRID';
         $axisOrder = '';
-        $mysqlVersionInt = $dbi->getVersion();
-        if ($mysqlVersionInt >= 50600) {
+        if (Compatibility::supportsGeometryFunctionsWithStPrefix($dbi)) {
             $spatialAsText = 'ST_ASTEXT';
             $spatialSrid = 'ST_SRID';
         }
 
-        if ($mysqlVersionInt >= 80001 && ! $dbi->isMariaDb()) {
+        if ($dbi->getVersion() >= 80001 && ! $dbi->isMariaDb()) {
             $axisOrder = ', \'axis-order=long-lat\'';
         }
 
@@ -89,14 +91,16 @@ final class Gis
     /**
      * Generates GIS data based on the string passed.
      *
-     * @param string $gisString    GIS string
-     * @param int    $mysqlVersion The mysql version as int
+     * @param string            $gisString GIS string
+     * @param DatabaseInterface $dbi       The database interface to use
      *
      * @return string GIS data enclosed in 'ST_GeomFromText' or 'GeomFromText' function
      */
-    public static function createData($gisString, $mysqlVersion)
+    public static function createData($gisString, DatabaseInterface $dbi)
     {
-        $geomFromText = $mysqlVersion >= 50600 ? 'ST_GeomFromText' : 'GeomFromText';
+        $geomFromText = Compatibility::supportsGeometryFunctionsWithStPrefix($dbi)
+            ? 'ST_GeomFromText'
+            : 'GeomFromText';
         $gisString = trim($gisString);
         $geomTypes = '(POINT|MULTIPOINT|LINESTRING|MULTILINESTRING|POLYGON|MULTIPOLYGON|GEOMETRYCOLLECTION)';
         if (preg_match("/^'" . $geomTypes . "\(.*\)',[0-9]*$/i", $gisString)) {
@@ -168,9 +172,7 @@ final class Gis
         }
 
         $spatialPrefix = '';
-        if ($dbi->getVersion() >= 50601) {
-            // If MySQL version is greater than or equal 5.6.1,
-            // use the ST_ prefix.
+        if (Compatibility::supportsGeometryFunctionsWithStPrefix($dbi)) {
             $spatialPrefix = 'ST_';
         }
 

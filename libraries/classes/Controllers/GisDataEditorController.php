@@ -89,8 +89,6 @@ class GisDataEditorController extends AbstractController
             'width' => 450,
             'height' => 300,
             'spatialColumn' => 'wkt',
-            'mysqlVersion' => $dbi->getVersion(),
-            'isMariaDB' => $dbi->isMariaDB(),
         ];
         $data = [
             [
